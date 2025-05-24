@@ -7,35 +7,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_barbershop")
-public class Barbershop {
+@Table(name = "tb_barber")
+public class Barber {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String specialty;
 	
-	@Column(unique = true)
-	private String cnpj;
+	@Column(name = "tb_barbershop_id")
+	private Barbershop barbershop;
 	
-	private String address;
-	
-	@JoinColumn(name = "user_id")
-	private User user;
-
-	public Barbershop() {
+	public Barber() {
 	}
 
-	public Barbershop(Long id, String name, String cnpj, String address, User user) {
+	public Barber(Long id, String name, String specialty, Barbershop barbershop) {
 		this.id = id;
 		this.name = name;
-		this.cnpj = cnpj;
-		this.address = address;
-		this.user = user;
+		this.specialty = specialty;
+		this.barbershop = barbershop;
 	}
 
 	public Long getId() {
@@ -54,33 +48,25 @@ public class Barbershop {
 		this.name = name;
 	}
 
-	public String getCnpj() {
-		return cnpj;
+	public String getSpecialty() {
+		return specialty;
 	}
 
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
+	public void setSpecialty(String specialty) {
+		this.specialty = specialty;
 	}
 
-	public String getAddress() {
-		return address;
+	public Barbershop getBarbershop() {
+		return barbershop;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
+	public void setBarbershop(Barbershop barbershop) {
+		this.barbershop = barbershop;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cnpj, id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -91,8 +77,8 @@ public class Barbershop {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Barbershop other = (Barbershop) obj;
-		return Objects.equals(cnpj, other.cnpj) && Objects.equals(id, other.id);
+		Barber other = (Barber) obj;
+		return Objects.equals(id, other.id);
 	}
 	
 }
