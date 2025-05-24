@@ -4,40 +4,38 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_user")
-public class User {
+@Table(name = "/barbershop")
+public class Barbershop {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private String name;
 	
 	@Column(unique = true)
-	private String email;
+	private String cnpj;
 	
-	private String password;
+	private String address;
 	
-	@Enumerated(EnumType.STRING)
-	private Role role;
+	@JoinColumn(name = "user_id")
+	private User user;
 
-	public User() {
+	public Barbershop() {
 	}
 
-	public User(Long id, String name, String password, Role role) {
-		super();
+	public Barbershop(Long id, String name, String cnpj, String address, User user) {
 		this.id = id;
 		this.name = name;
-		this.password = password;
-		this.role = role;
+		this.cnpj = cnpj;
+		this.address = address;
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -56,25 +54,33 @@ public class User {
 		this.name = name;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getCnpj() {
+		return cnpj;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
-	public Role getRole() {
-		return role;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(cnpj, id);
 	}
 
 	@Override
@@ -85,7 +91,8 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
-		return Objects.equals(id, other.id);
+		Barbershop other = (Barbershop) obj;
+		return Objects.equals(cnpj, other.cnpj) && Objects.equals(id, other.id);
 	}
+	
 }
