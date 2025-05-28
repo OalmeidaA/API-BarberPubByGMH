@@ -25,13 +25,13 @@ public class Barbershop {
 	
 	private String address;
 	
-	@OneToMany(mappedBy = "barbearia")
+	@OneToMany(mappedBy = "barbershop")
 	private List<User> users;
 	
-	@OneToMany(mappedBy = "barbearia")
+	@OneToMany(mappedBy = "barbershop")
 	private List<Barber> barbers;
 	
-	@OneToMany(mappedBy = "barbearia")
+	@OneToMany(mappedBy = "barbershop")
 	private List<Service> services;
 
 	public Barbershop() {

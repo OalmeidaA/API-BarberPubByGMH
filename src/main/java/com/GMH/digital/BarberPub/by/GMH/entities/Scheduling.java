@@ -21,7 +21,7 @@ public class Scheduling {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDate date;
-	private String hour;
+	private String appointmentHour;
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
@@ -41,10 +41,10 @@ public class Scheduling {
 	public Scheduling() {	
 	}
 
-	public Scheduling(Long id, LocalDate date, String hour, Status status, User user, Barber barber, Service service) {
+	public Scheduling(Long id, LocalDate date, String appointmentHour, Status status, User user, Barber barber, Service service) {
 		this.id = id;
 		this.date = date;
-		this.hour = hour;
+		this.appointmentHour = appointmentHour;
 		this.status = status;
 		this.user = user;
 		this.barber = barber;
@@ -67,12 +67,12 @@ public class Scheduling {
 		this.date = date;
 	}
 
-	public String getHour() {
-		return hour;
+	public String getAppointmentHour() {
+		return appointmentHour;
 	}
 
-	public void setHour(String hour) {
-		this.hour = hour;
+	public void setAppointmentHour(String appointmentHour) {
+		this.appointmentHour = appointmentHour;
 	}
 
 	public Status getStatus() {
