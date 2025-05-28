@@ -1,5 +1,6 @@
 package com.GMH.digital.BarberPub.by.GMH.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +17,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +43,11 @@ public class User {
 	public User() {
 	}
 
-	public User(Long id, String name, String password, Role role) {
+	public User(Long id, String name, String email, String password, Role role) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.email = email;
 		this.password = password;
 		this.role = role;
 	}
@@ -63,6 +66,15 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

@@ -1,5 +1,6 @@
 package com.GMH.digital.BarberPub.by.GMH.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,7 +16,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_scheduling")
-public class Scheduling {
+public class Scheduling implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,12 +38,12 @@ public class Scheduling {
 	
 	@ManyToOne
 	@JoinColumn(name = "tb_service_id")
-	private Service service;
+	private ServicesBarber service;
 	
 	public Scheduling() {	
 	}
 
-	public Scheduling(Long id, LocalDate date, String appointmentHour, Status status, User user, Barber barber, Service service) {
+	public Scheduling(Long id, LocalDate date, String appointmentHour, Status status, User user, Barber barber, ServicesBarber service) {
 		this.id = id;
 		this.date = date;
 		this.appointmentHour = appointmentHour;
@@ -99,11 +101,11 @@ public class Scheduling {
 		this.barber = barber;
 	}
 
-	public Service getService() {
+	public ServicesBarber getService() {
 		return service;
 	}
 
-	public void setService(Service service) {
+	public void setService(ServicesBarber service) {
 		this.service = service;
 	}
 

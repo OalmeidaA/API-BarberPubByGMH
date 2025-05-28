@@ -1,5 +1,6 @@
 package com.GMH.digital.BarberPub.by.GMH.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_barber")
-public class Barber {
+public class Barber implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
