@@ -2,11 +2,12 @@ package com.GMH.digital.BarberPub.by.GMH.entities;
 
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +20,8 @@ public class Barber {
 	private String name;
 	private String specialty;
 	
-	@Column(name = "tb_barbershop_id")
+	@ManyToOne
+	@JoinColumn(name = "tb_barbershop_id")
 	private Barbershop barbershop;
 	
 	public Barber() {

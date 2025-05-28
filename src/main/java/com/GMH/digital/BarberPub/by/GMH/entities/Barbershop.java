@@ -1,5 +1,6 @@
 package com.GMH.digital.BarberPub.by.GMH.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,7 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,18 +25,23 @@ public class Barbershop {
 	
 	private String address;
 	
-	@JoinColumn(name = "user_id")
-	private User user;
+	@OneToMany(mappedBy = "barbearia")
+	private List<User> users;
+	
+	@OneToMany(mappedBy = "barbearia")
+	private List<Barber> barbers;
+	
+	@OneToMany(mappedBy = "barbearia")
+	private List<Service> services;
 
 	public Barbershop() {
 	}
 
-	public Barbershop(Long id, String name, String cnpj, String address, User user) {
+	public Barbershop(Long id, String name, String cnpj, String address) {
 		this.id = id;
 		this.name = name;
 		this.cnpj = cnpj;
 		this.address = address;
-		this.user = user;
 	}
 
 	public Long getId() {
@@ -68,14 +74,6 @@ public class Barbershop {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	@Override
