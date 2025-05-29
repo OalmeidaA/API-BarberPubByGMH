@@ -14,7 +14,7 @@ import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
 import com.GMH.digital.BarberPub.by.GMH.services.ServicesBarberService;
 
 @RestController
-@RequestMapping(value = "/Client")
+@RequestMapping(value = "/users")
 public class UserController {
 
 	@Autowired
