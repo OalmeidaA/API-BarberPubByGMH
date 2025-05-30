@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.GMH.digital.BarberPub.by.GMH.dto.BarberDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.ServicesBarberDTO;
+import com.GMH.digital.BarberPub.by.GMH.entities.Barber;
 import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
+import com.GMH.digital.BarberPub.by.GMH.services.BarberService;
 import com.GMH.digital.BarberPub.by.GMH.services.ServicesBarberService;
 
 @RestController
@@ -26,6 +29,9 @@ public class AdminController {
 
 	@Autowired
 	private ServicesBarberService servicesBarberService;
+	
+	@Autowired
+	private BarberService barberService;
 	
 	@PostMapping
 	public ResponseEntity<Void> insertService(@RequestBody ServicesBarberDTO serviceDto){
@@ -50,6 +56,25 @@ public class AdminController {
 	public ResponseEntity<ServicesBarberDTO> updateService(@PathVariable Long id, @RequestBody ServicesBarberDTO serviceDTO) throws Exception {
 		serviceDTO = servicesBarberService.updateServices(id, serviceDTO);
 		return ResponseEntity.ok(serviceDTO);
+	}
+	
+	@GetMapping("/barber")
+	public ResponseEntity<List<BarberDTO>> findAllBarber(){
+		List<Barber> list = barberService.findAllBarber();
+		List<BarberDTO> listDto = list.stream().map(x -> new BarberDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok(listDto);
+	}
+	
+	@PostMapping("/barber")
+	public ResponseEntity<Void> insertBarber(@RequestBody BarberDTO barberDTO){
+		Barber newBarber = barberService.insertBarber(barberDTO);
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/barber/{id}")
+	public ResponseEntity<Void> deleteBarber(@PathVariable Long id) throws Exception{
+		barberService.deleteBarber(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	

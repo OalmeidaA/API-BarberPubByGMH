@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import com.GMH.digital.BarberPub.by.GMH.dto.BarberDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +34,12 @@ public class Barber implements Serializable {
 	private List<Scheduling> schedulings;
 	
 	public Barber() {
+		
+	}
+	
+	public Barber(BarberDTO barber) {
+		name = barber.getName();
+		specialty = barber.getSpecialty();
 	}
 
 	public Barber(Long id, String name, String specialty, Barbershop barbershop) {
