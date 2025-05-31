@@ -30,6 +30,7 @@ public class User implements Serializable {
 	private String email;
 	
 	private String password;
+	private String phone;
 	
 	@Enumerated(EnumType.STRING)
 	private Role role;
@@ -43,12 +44,13 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(Long id, String name, String email, String password, Role role) {
+	public User(Long id, String name, String email, String password, String phone, Role role) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.phone = phone;
 		this.role = role;
 	}
 
@@ -92,6 +94,14 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 	@Override
 	public int hashCode() {
@@ -109,4 +119,6 @@ public class User implements Serializable {
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
 }

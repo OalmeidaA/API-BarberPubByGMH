@@ -50,6 +50,10 @@ public class ServicesBarber implements Serializable {
 		this.duration = duration;
 		this.barbershop = barbershop;
 	}
+	
+	public List<Scheduling> getScheduling(){
+		return schedulings;
+	}
 
 	public Long getId() {
 		return id;

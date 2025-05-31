@@ -1,8 +1,15 @@
 package com.GMH.digital.BarberPub.by.GMH.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.GMH.digital.BarberPub.by.GMH.entities.Barbershop;
+import com.GMH.digital.BarberPub.by.GMH.entities.Scheduling;
 import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
+
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 public class ServicesBarberDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -11,6 +18,13 @@ public class ServicesBarberDTO implements Serializable {
 	private String name;
 	private Integer price;
 	private String duration;
+	
+	@ManyToOne
+	@JoinColumn(name = "tb_barbershop_id")
+	private Barbershop barbershop;
+	
+	@OneToMany(mappedBy = "service")
+	private List<Scheduling> schedulings;
 	
 	public ServicesBarberDTO() {
 		
@@ -21,6 +35,8 @@ public class ServicesBarberDTO implements Serializable {
 		name = servicesBarber.getName();
 		price = servicesBarber.getPrice();
 		duration = servicesBarber.getDuration();
+		barbershop = servicesBarber.getBarbershop();
+		List<Scheduling> listScheduling = servicesBarber.getScheduling();
 	}
 
 	public String getName() {

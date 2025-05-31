@@ -21,11 +21,15 @@ public class Barbershop implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String email;
+	private String phone;
 	
 	@Column(unique = true)
 	private String cnpj;
 	
 	private String address;
+	private String description;
+	
 	
 	@OneToMany(mappedBy = "barbershop")
 	private List<User> users;
@@ -39,11 +43,14 @@ public class Barbershop implements Serializable {
 	public Barbershop() {
 	}
 
-	public Barbershop(Long id, String name, String cnpj, String address) {
+	public Barbershop(Long id, String name, String cnpj, String address, String email, String phone, String description) {
 		this.id = id;
 		this.name = name;
 		this.cnpj = cnpj;
 		this.address = address;
+		this.email = email;
+		this.phone = phone;
+		this.description = description;
 	}
 
 	public Long getId() {
@@ -77,6 +84,30 @@ public class Barbershop implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@Override
 	public int hashCode() {
@@ -94,5 +125,5 @@ public class Barbershop implements Serializable {
 		Barbershop other = (Barbershop) obj;
 		return Objects.equals(cnpj, other.cnpj) && Objects.equals(id, other.id);
 	}
-	
+
 }

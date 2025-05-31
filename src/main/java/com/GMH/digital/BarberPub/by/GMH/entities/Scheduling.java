@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.GMH.digital.BarberPub.by.GMH.dto.SchedulingDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -40,7 +42,14 @@ public class Scheduling implements Serializable {
 	@JoinColumn(name = "tb_service_id")
 	private ServicesBarber service;
 	
-	public Scheduling() {	
+	public Scheduling() {
+		
+	}
+	
+	public Scheduling(SchedulingDTO dto) {	
+		id = dto.getId();
+		date = dto.getDate();
+		appointmentHour = dto.getAppointmentHour();
 	}
 
 	public Scheduling(Long id, LocalDate date, String appointmentHour, Status status, User user, Barber barber, ServicesBarber service) {
