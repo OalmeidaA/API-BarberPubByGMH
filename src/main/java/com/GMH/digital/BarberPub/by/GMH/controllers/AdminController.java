@@ -77,5 +77,10 @@ public class AdminController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PutMapping("/barber/{id}")
+	public ResponseEntity<BarberDTO> updateBarber(@RequestBody BarberDTO dto, @PathVariable Long id){
+		BarberDTO update = barberService.updateBarber(dto, id);
+		return ResponseEntity.ok(update);
+	}
 	
 }

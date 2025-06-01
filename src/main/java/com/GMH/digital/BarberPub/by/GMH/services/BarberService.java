@@ -8,11 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.BarberDTO;
 import com.GMH.digital.BarberPub.by.GMH.entities.Barber;
+import com.GMH.digital.BarberPub.by.GMH.exception.ResourceNotFoundException;
 import com.GMH.digital.BarberPub.by.GMH.repositories.BarberRespository;
 
 @Service
 public class BarberService {
 
+	private static final BarberDTO BarberDTO = null;
 	@Autowired
 	private BarberRespository repository;
 	
@@ -38,10 +40,18 @@ public class BarberService {
 		repository.deleteById(id);
 	}
 	
+	@Transactional
+	public BarberDTO updateBarber(BarberDTO dto, Long id) {
+		Barber barber = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id of Barber not Found"));
+		copyBarber(dto, barber); 
+		repository.save(barber);
+		BarberDTO updateBarber = new BarberDTO(barber);
+		return updateBarber;
+	}
+	
 	public void copyBarber(BarberDTO dto, Barber entity) {
-		dto.setName(entity.getName());
-		dto.setId(entity.getId());
-		dto.setSpecialty(entity.getSpecialty());
+		entity.setName(dto.getName());
+		entity.setSpecialty(dto.getSpecialty());
 	}
 	
 	
