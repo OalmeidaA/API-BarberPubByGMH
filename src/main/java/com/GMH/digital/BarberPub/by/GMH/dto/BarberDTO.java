@@ -1,8 +1,10 @@
 package com.GMH.digital.BarberPub.by.GMH.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.GMH.digital.BarberPub.by.GMH.entities.Barber;
+import com.GMH.digital.BarberPub.by.GMH.entities.Scheduling;
 
 public class BarberDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -11,21 +13,32 @@ public class BarberDTO implements Serializable {
 	private String name;
 	private String specialty;
 	
+	private Long barbershopId;
+	private List schedulings;
+	
 	public BarberDTO() {
 		
 	}
 
-	public BarberDTO(String name, String specialty, Long id) {
+	public BarberDTO(String name, String specialty, Long id, Long barbershopId, List schedulings) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.specialty = specialty;
+		this.barbershopId = barbershopId;
+		this.schedulings = schedulings;
 	}
 	
 	public BarberDTO(Barber barber) {
 		id = barber.getId();
 		name = barber.getName();
 		specialty = barber.getSpecialty();
+		
+		if (barber.getBarbershop() != null) {
+			barbershopId = barber.getBarbershop().getId();
+		}
+		
+		List<Scheduling> list = barber.getSchedulings();
 	}
 
 	public String getName() {
@@ -51,6 +64,21 @@ public class BarberDTO implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public Long getBarbershopId() {
+		return barbershopId;
+	}
+
+	public void setBarbershopId(Long barbershopId) {
+		this.barbershopId = barbershopId;
+	}
+
+	public List getSchedulings() {
+		return schedulings;
+	}
+
+	public void setSchedulings(List schedulings) {
+		this.schedulings = schedulings;
+	}
 
 }

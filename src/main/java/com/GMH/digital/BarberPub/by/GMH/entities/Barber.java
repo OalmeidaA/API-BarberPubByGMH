@@ -81,6 +81,14 @@ public class Barber implements Serializable {
 		this.barbershop = barbershop;
 	}
 
+	public List<Scheduling> getSchedulings() {
+		return schedulings;
+	}
+
+	public void setSchedulings(List<Scheduling> schedulings) {
+		this.schedulings = schedulings;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

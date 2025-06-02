@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.BarberDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.BarbershopDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.ServicesBarberDTO;
 import com.GMH.digital.BarberPub.by.GMH.entities.Barber;
 import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
 import com.GMH.digital.BarberPub.by.GMH.services.BarberService;
+import com.GMH.digital.BarberPub.by.GMH.services.BarbershopService;
 import com.GMH.digital.BarberPub.by.GMH.services.ServicesBarberService;
 
 @RestController
@@ -32,6 +34,9 @@ public class AdminController {
 	
 	@Autowired
 	private BarberService barberService;
+	
+	@Autowired
+	private BarbershopService shopService;
 	
 	@PostMapping
 	public ResponseEntity<Void> insertService(@RequestBody ServicesBarberDTO serviceDto){
@@ -83,4 +88,17 @@ public class AdminController {
 		return ResponseEntity.ok(update);
 	}
 	
+	@PostMapping("/barbershop")
+	public ResponseEntity<BarbershopDTO> createBarbershop(@RequestBody BarbershopDTO dto){
+		BarbershopDTO newShop = shopService.createBarbershop(dto);
+		return ResponseEntity.ok(newShop);
+	}
+	
+	@GetMapping("/barbershop")
+	public ResponseEntity<List<BarbershopDTO>> findAllBarbershop(){
+		List<BarbershopDTO> listShop = shopService.findAllBarbershop();
+		return ResponseEntity.ok(listShop);
+	}
+	
 }
+

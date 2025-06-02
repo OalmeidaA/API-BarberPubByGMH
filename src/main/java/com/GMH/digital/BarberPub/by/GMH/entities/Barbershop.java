@@ -3,12 +3,18 @@ package com.GMH.digital.BarberPub.by.GMH.entities;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import com.GMH.digital.BarberPub.by.GMH.dto.BarberDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.BarbershopDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -26,15 +32,16 @@ public class Barbershop implements Serializable {
 	
 	@Column(unique = true)
 	private String cnpj;
-	
 	private String address;
+	
+	@Lob
 	private String description;
 	
 	
 	@OneToMany(mappedBy = "barbershop")
 	private List<User> users;
 	
-	@OneToMany(mappedBy = "barbershop")
+	@OneToMany(mappedBy = "barbershop", fetch = FetchType.EAGER)
 	private List<Barber> barbers;
 	
 	@OneToMany(mappedBy = "barbershop")
@@ -51,6 +58,19 @@ public class Barbershop implements Serializable {
 		this.email = email;
 		this.phone = phone;
 		this.description = description;
+	}
+	
+	public Barbershop(BarbershopDTO dto) {
+		id = dto.getId();
+		name = dto.getName();
+		email = dto.getEmail();
+		phone = dto.getPhone();
+		cnpj = dto.getCnpj();
+		address = dto.getAddress();
+		description = dto.getDescription();
+		users = dto.getUsers();
+		barbers = dto.getBarbers().stream().map(Barber::new).collect(Collectors.toList());
+		services = dto.getServices();
 	}
 
 	public Long getId() {
@@ -107,6 +127,30 @@ public class Barbershop implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public List<Barber> getBarbers() {
+		return barbers;
+	}
+
+	public void setBarbers(List<Barber> barbers) {
+		this.barbers = barbers;
+	}
+
+	public List<ServicesBarber> getServices() {
+		return services;
+	}
+
+	public void setServices(List<ServicesBarber> services) {
+		this.services = services;
 	}
 
 	@Override
