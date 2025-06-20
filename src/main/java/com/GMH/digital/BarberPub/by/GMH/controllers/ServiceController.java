@@ -42,7 +42,7 @@ public class ServiceController {
 	
 	@PutMapping(value = "{id}")
 	public ResponseEntity<ServiceDTO> updateService(@PathVariable Long id, @RequestBody ServiceDTO serviceDTO) throws Exception {
-		serviceDTO = serviceManager.updateServices(id, serviceDTO);
+		serviceDTO = serviceManager.updateService(id, serviceDTO);
 		return ResponseEntity.ok(serviceDTO);
 	}
 	

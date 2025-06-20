@@ -41,7 +41,7 @@ public class ServiceManager {
 	}
 	
 	@Transactional
-	public ServiceDTO updateServices(Long id, ServiceDTO serviceDto) throws Exception {
+	public ServiceDTO updateService(Long id, ServiceDTO serviceDto) throws Exception {
 		
 		try {
 		Service service = serviceRespository.getReferenceById(id);

@@ -28,26 +28,26 @@ public class EmployeeController {
 	private EmployeeService employeeService;
  
 	@PostMapping("/barber")
-	public ResponseEntity<Void> insertBarber(@RequestBody EmployeeDTO employeeDTO){
-		Employee newBarber = employeeService.insertBarber(employeeDTO);
+	public ResponseEntity<Void> insertEmployee(@RequestBody EmployeeDTO employeeDTO){
+		Employee newBarber = employeeService.insertEmployee(employeeDTO);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/barber/{id}")
-	public ResponseEntity<Void> deleteBarber(@PathVariable Long id) throws Exception{
-		employeeService.deleteBarber(id);
+	public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) throws Exception{
+		employeeService.deleteEmployee(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping("/barber/{id}")
-	public ResponseEntity<EmployeeDTO> updateBarber(@RequestBody EmployeeDTO dto, @PathVariable Long id){
-		EmployeeDTO update = employeeService.updateBarber(dto, id);
+	public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeDTO dto, @PathVariable Long id){
+		EmployeeDTO update = employeeService.updateEmployee(dto, id);
 		return ResponseEntity.ok(update);
 	}
 	
 	@GetMapping("/barber")
-	public ResponseEntity<List<EmployeeDTO>> findAllBarber(){
-		List<Employee> list = employeeService.findAllBarber();
+	public ResponseEntity<List<EmployeeDTO>> findAllEmployee(){
+		List<Employee> list = employeeService.findAllEmployees();
 		List<EmployeeDTO> listDto = list.stream().map(x -> new EmployeeDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok(listDto);
 	}

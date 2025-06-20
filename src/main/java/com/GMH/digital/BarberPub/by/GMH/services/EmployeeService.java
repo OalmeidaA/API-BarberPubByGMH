@@ -16,7 +16,6 @@ import com.GMH.digital.BarberPub.by.GMH.repositories.BusinessRespository;
 @Service
 public class EmployeeService {
 
-	private static final EmployeeDTO EmployeeDTO = null;
 	@Autowired
 	private EmployeeRespository barberRepository;
 	
@@ -24,13 +23,13 @@ public class EmployeeService {
 	private BusinessRespository barbershopRepository;
 	
 	@Transactional(readOnly = true)
-	public List<Employee> findAllBarber() {
+	public List<Employee> findAllEmployees() {
 		List<Employee> list = barberRepository.findAll();
 		return list;
 	}
 
 	@Transactional
-	public Employee insertBarber(EmployeeDTO barber) {
+	public Employee insertEmployee(EmployeeDTO barber) {
 		Employee newBarber = new Employee(barber);
 		
 		Business shop = barbershopRepository.findById(barber.getBarbershopId()).orElseThrow(() -> new RuntimeException("Barbershop not Found"));
@@ -40,7 +39,7 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public void deleteBarber(Long id) throws Exception {
+	public void deleteEmployee(Long id) throws Exception {
 
 		if (!barberRepository.existsById(id)) {
 			throw new Exception ("ID não encontrado");
@@ -49,15 +48,15 @@ public class EmployeeService {
 	}
 	
 	@Transactional
-	public EmployeeDTO updateBarber(EmployeeDTO dto, Long id) {
+	public EmployeeDTO updateEmployee(EmployeeDTO dto, Long id) {
 		Employee barber = barberRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id of Barber not Found"));
-		copyBarber(dto, barber); 
+		copyEmployee(dto, barber); 
 		barberRepository.save(barber);
 		EmployeeDTO updateBarber = new EmployeeDTO(barber);
 		return updateBarber;
 	}
 	
-	public void copyBarber(EmployeeDTO dto, Employee entity) {
+	public void copyEmployee(EmployeeDTO dto, Employee entity) {
 		entity.setName(dto.getName());
 		entity.setSpecialty(dto.getSpecialty());
 	}

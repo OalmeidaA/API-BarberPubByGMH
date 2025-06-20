@@ -19,7 +19,7 @@ public class BusinessService {
 	private BusinessRespository repository;
 	
 	@Transactional
-	public BusinessDTO createBarbershop(BusinessDTO dto){
+	public BusinessDTO createBusiness(BusinessDTO dto){
 		Business newBarbershop = new Business(dto);
 		repository.save(newBarbershop);
 		BusinessDTO shopDTO = new BusinessDTO(newBarbershop);
@@ -27,7 +27,7 @@ public class BusinessService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<BusinessDTO> findAllBarbershop(){
+	public List<BusinessDTO> findAllBusiness(){
 		List<Business> list = repository.findAll();
 		List<BusinessDTO> listDto = list.stream().map(x -> new BusinessDTO(x)).collect(Collectors.toList());
 		return listDto;

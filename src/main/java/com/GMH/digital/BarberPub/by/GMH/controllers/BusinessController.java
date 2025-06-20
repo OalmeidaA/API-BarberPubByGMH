@@ -25,13 +25,13 @@ public class BusinessController {
 	
 	@PostMapping("/business")
 	public ResponseEntity<BusinessDTO> createBarbershop(@RequestBody BusinessDTO dto){
-		BusinessDTO newShop = businessService.createBarbershop(dto);
+		BusinessDTO newShop = businessService.createBusiness(dto);
 		return ResponseEntity.ok(newShop);
 	}
 	
 	@GetMapping("/business")
 	public ResponseEntity<List<BusinessDTO>> findAllBarbershop(){
-		List<BusinessDTO> listShop = businessService.findAllBarbershop();
+		List<BusinessDTO> listShop = businessService.findAllBusiness();
 		return ResponseEntity.ok(listShop);
 	}
 
