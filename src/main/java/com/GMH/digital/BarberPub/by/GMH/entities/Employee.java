@@ -16,7 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_barber")
+@Table(name = "employees")
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -27,10 +27,10 @@ public class Employee implements Serializable {
 	private String specialty;
 	
 	@ManyToOne
-	@JoinColumn(name = "tb_barbershop_id")
+	@JoinColumn(name = "business_id")
 	private Business barbershop;
 	
-	@OneToMany(mappedBy = "barber")
+	@OneToMany(mappedBy = "employee")
 	private List<Booking> bookings;
 	
 	public Employee() {

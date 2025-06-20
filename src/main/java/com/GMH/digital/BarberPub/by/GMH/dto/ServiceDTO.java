@@ -3,8 +3,8 @@ package com.GMH.digital.BarberPub.by.GMH.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.GMH.digital.BarberPub.by.GMH.entities.Business;
 import com.GMH.digital.BarberPub.by.GMH.entities.Booking;
+import com.GMH.digital.BarberPub.by.GMH.entities.Business;
 import com.GMH.digital.BarberPub.by.GMH.entities.Service;
 
 import jakarta.persistence.JoinColumn;
@@ -20,7 +20,6 @@ public class ServiceDTO implements Serializable {
 	private String duration;
 	
 	@ManyToOne
-	@JoinColumn(name = "tb_barbershop_id")
 	private Business barbershop;
 	
 	@OneToMany(mappedBy = "service")

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.EmployeeDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
 
 import jakarta.persistence.Column;
@@ -19,7 +18,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_barbershop")
+@Table(name = "business")
 public class Business implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -38,13 +37,13 @@ public class Business implements Serializable {
 	private String description;
 	
 	
-	@OneToMany(mappedBy = "barbershop")
+	@OneToMany(mappedBy = "business")
 	private List<Customer> users;
 	
-	@OneToMany(mappedBy = "barbershop", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "business", fetch = FetchType.EAGER)
 	private List<Employee> barbers;
 	
-	@OneToMany(mappedBy = "barbershop")
+	@OneToMany(mappedBy = "business")
 	private List<Service> services;
 
 	public Business() {

@@ -16,7 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_service")
+@Table(name = "services")
 public class Service implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -28,7 +28,7 @@ public class Service implements Serializable {
 	private String duration;
 	
 	@ManyToOne
-	@JoinColumn(name = "tb_barbershop_id")
+	@JoinColumn(name = "business_id")
 	private Business barbershop;
 	
 	@OneToMany(mappedBy = "service")

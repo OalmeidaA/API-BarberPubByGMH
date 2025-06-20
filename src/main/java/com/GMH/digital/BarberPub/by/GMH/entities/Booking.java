@@ -17,7 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_scheduling")
+@Table(name = "booking")
 public class Booking implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -31,15 +31,15 @@ public class Booking implements Serializable {
 	private Status status;
 	
 	@ManyToOne
-	@JoinColumn(name = "tb_user_id")
+	@JoinColumn(name = "customer_id")
 	private Customer user;
 	
 	@ManyToOne
-	@JoinColumn(name = "tb_barber_id")
+	@JoinColumn(name = "employee_id")
 	private Employee barber;
 	
 	@ManyToOne
-	@JoinColumn(name = "tb_service_id")
+	@JoinColumn(name = "service_id")
 	private Service service;
 	
 	public Booking() {

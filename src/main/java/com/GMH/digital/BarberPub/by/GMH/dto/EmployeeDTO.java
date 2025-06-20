@@ -3,8 +3,8 @@ package com.GMH.digital.BarberPub.by.GMH.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.GMH.digital.BarberPub.by.GMH.entities.Employee;
 import com.GMH.digital.BarberPub.by.GMH.entities.Booking;
+import com.GMH.digital.BarberPub.by.GMH.entities.Employee;
 
 public class EmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
