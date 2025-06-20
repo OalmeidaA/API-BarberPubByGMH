@@ -20,7 +20,7 @@ import com.GMH.digital.BarberPub.by.GMH.services.ServiceManager;
 import com.GMH.digital.BarberPub.by.GMH.services.CustomerService;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping("/customer")
 @PreAuthorize("hasRole('USER')")
 public class CustomerController {
 
