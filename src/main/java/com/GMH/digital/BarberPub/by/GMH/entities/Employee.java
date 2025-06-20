@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.BarberDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.EmployeeDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_barber")
-public class Barber implements Serializable {
+public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -28,21 +28,21 @@ public class Barber implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "tb_barbershop_id")
-	private Barbershop barbershop;
+	private Business barbershop;
 	
 	@OneToMany(mappedBy = "barber")
-	private List<Scheduling> schedulings;
+	private List<Booking> bookings;
 	
-	public Barber() {
+	public Employee() {
 		
 	}
 	
-	public Barber(BarberDTO barber) {
+	public Employee(EmployeeDTO barber) {
 		name = barber.getName();
 		specialty = barber.getSpecialty();
 	}
 
-	public Barber(Long id, String name, String specialty, Barbershop barbershop) {
+	public Employee(Long id, String name, String specialty, Business barbershop) {
 		this.id = id;
 		this.name = name;
 		this.specialty = specialty;
@@ -73,20 +73,20 @@ public class Barber implements Serializable {
 		this.specialty = specialty;
 	}
 
-	public Barbershop getBarbershop() {
+	public Business getBarbershop() {
 		return barbershop;
 	}
 
-	public void setBarbershop(Barbershop barbershop) {
+	public void setBarbershop(Business barbershop) {
 		this.barbershop = barbershop;
 	}
 
-	public List<Scheduling> getSchedulings() {
-		return schedulings;
+	public List<Booking> getSchedulings() {
+		return bookings;
 	}
 
-	public void setSchedulings(List<Scheduling> schedulings) {
-		this.schedulings = schedulings;
+	public void setSchedulings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class Barber implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Barber other = (Barber) obj;
+		Employee other = (Employee) obj;
 		return Objects.equals(id, other.id);
 	}
 	

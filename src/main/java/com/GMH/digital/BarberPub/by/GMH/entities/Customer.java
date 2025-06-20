@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -36,15 +36,15 @@ public class User implements Serializable {
 	private Role role;
 	
 	@ManyToOne
-	private Barbershop barbershop;
+	private Business barbershop;
 	
 	@OneToMany(mappedBy = "user")
-	private List<Scheduling> schedulings;
+	private List<Booking> bookings;
 
-	public User() {
+	public Customer() {
 	}
 
-	public User(Long id, String name, String email, String password, String phone, Role role) {
+	public Customer(Long id, String name, String email, String password, String phone, Role role) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -116,7 +116,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Customer other = (Customer) obj;
 		return Objects.equals(id, other.id);
 	}
 

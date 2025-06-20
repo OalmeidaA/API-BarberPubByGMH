@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.SchedulingDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.BookingDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_scheduling")
-public class Scheduling implements Serializable {
+public class Booking implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -32,27 +32,27 @@ public class Scheduling implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "tb_user_id")
-	private User user;
+	private Customer user;
 	
 	@ManyToOne
 	@JoinColumn(name = "tb_barber_id")
-	private Barber barber;
+	private Employee barber;
 	
 	@ManyToOne
 	@JoinColumn(name = "tb_service_id")
-	private ServicesBarber service;
+	private Service service;
 	
-	public Scheduling() {
+	public Booking() {
 		
 	}
 	
-	public Scheduling(SchedulingDTO dto) {	
+	public Booking(BookingDTO dto) {	
 		id = dto.getId();
 		date = dto.getDate();
 		appointmentHour = dto.getAppointmentHour();
 	}
 
-	public Scheduling(Long id, LocalDate date, String appointmentHour, Status status, User user, Barber barber, ServicesBarber service) {
+	public Booking(Long id, LocalDate date, String appointmentHour, Status status, Customer user, Employee barber, Service service) {
 		this.id = id;
 		this.date = date;
 		this.appointmentHour = appointmentHour;
@@ -94,27 +94,27 @@ public class Scheduling implements Serializable {
 		this.status = status;
 	}
 
-	public User getUser() {
+	public Customer getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Customer user) {
 		this.user = user;
 	}
 
-	public Barber getBarber() {
+	public Employee getBarber() {
 		return barber;
 	}
 
-	public void setBarber(Barber barber) {
+	public void setBarber(Employee barber) {
 		this.barber = barber;
 	}
 
-	public ServicesBarber getService() {
+	public Service getService() {
 		return service;
 	}
 
-	public void setService(ServicesBarber service) {
+	public void setService(Service service) {
 		this.service = service;
 	}
 
@@ -131,7 +131,7 @@ public class Scheduling implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Scheduling other = (Scheduling) obj;
+		Booking other = (Booking) obj;
 		return Objects.equals(id, other.id);
 	}
 	

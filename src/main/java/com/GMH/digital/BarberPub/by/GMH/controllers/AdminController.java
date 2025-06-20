@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.BarberDTO;
-import com.GMH.digital.BarberPub.by.GMH.dto.BarbershopDTO;
-import com.GMH.digital.BarberPub.by.GMH.dto.ServicesBarberDTO;
-import com.GMH.digital.BarberPub.by.GMH.entities.Barber;
-import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
-import com.GMH.digital.BarberPub.by.GMH.services.BarberService;
-import com.GMH.digital.BarberPub.by.GMH.services.BarbershopService;
-import com.GMH.digital.BarberPub.by.GMH.services.ServicesBarberService;
+import com.GMH.digital.BarberPub.by.GMH.dto.EmployeeDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDTO;
+import com.GMH.digital.BarberPub.by.GMH.entities.Employee;
+import com.GMH.digital.BarberPub.by.GMH.entities.Service;
+import com.GMH.digital.BarberPub.by.GMH.services.BusinessService;
+import com.GMH.digital.BarberPub.by.GMH.services.EmployeeService;
+import com.GMH.digital.BarberPub.by.GMH.services.ServiceManager;
 
 @RestController
 @RequestMapping("/admin")
@@ -30,73 +30,73 @@ import com.GMH.digital.BarberPub.by.GMH.services.ServicesBarberService;
 public class AdminController {
 
 	@Autowired
-	private ServicesBarberService servicesBarberService;
+	private ServiceManager serviceManager;
 	
 	@Autowired
-	private BarberService barberService;
+	private EmployeeService employeeService;
 	
 	@Autowired
-	private BarbershopService shopService;
+	private BusinessService businessService;
 	
 	@PostMapping
-	public ResponseEntity<Void> insertService(@RequestBody ServicesBarberDTO serviceDto){
-		ServicesBarber obj = servicesBarberService.insertService(serviceDto);
+	public ResponseEntity<Void> insertService(@RequestBody ServiceDTO serviceDto){
+		Service obj = serviceManager.insertService(serviceDto);
 		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<ServicesBarberDTO>> findAllServices(){
-		List<ServicesBarber> list = servicesBarberService.findAllServices();
-		List<ServicesBarberDTO> listdto = list.stream().map(x -> new ServicesBarberDTO(x)).collect(Collectors.toList());
+	public ResponseEntity<List<ServiceDTO>> findAllServices(){
+		List<Service> list = serviceManager.findAllServices();
+		List<ServiceDTO> listdto = list.stream().map(x -> new ServiceDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok(listdto);
 	}
 	
 	@DeleteMapping(value = "{id}")
 	public ResponseEntity<Void> deleteService(@PathVariable Long id) throws Exception {
-		servicesBarberService.deleteService(id);
+		serviceManager.deleteService(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping(value = "{id}")
-	public ResponseEntity<ServicesBarberDTO> updateService(@PathVariable Long id, @RequestBody ServicesBarberDTO serviceDTO) throws Exception {
-		serviceDTO = servicesBarberService.updateServices(id, serviceDTO);
+	public ResponseEntity<ServiceDTO> updateService(@PathVariable Long id, @RequestBody ServiceDTO serviceDTO) throws Exception {
+		serviceDTO = serviceManager.updateServices(id, serviceDTO);
 		return ResponseEntity.ok(serviceDTO);
 	}
 	
 	@GetMapping("/barber")
-	public ResponseEntity<List<BarberDTO>> findAllBarber(){
-		List<Barber> list = barberService.findAllBarber();
-		List<BarberDTO> listDto = list.stream().map(x -> new BarberDTO(x)).collect(Collectors.toList());
+	public ResponseEntity<List<EmployeeDTO>> findAllBarber(){
+		List<Employee> list = employeeService.findAllBarber();
+		List<EmployeeDTO> listDto = list.stream().map(x -> new EmployeeDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok(listDto);
 	}
 	
 	@PostMapping("/barber")
-	public ResponseEntity<Void> insertBarber(@RequestBody BarberDTO barberDTO){
-		Barber newBarber = barberService.insertBarber(barberDTO);
+	public ResponseEntity<Void> insertBarber(@RequestBody EmployeeDTO employeeDTO){
+		Employee newBarber = employeeService.insertBarber(employeeDTO);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/barber/{id}")
 	public ResponseEntity<Void> deleteBarber(@PathVariable Long id) throws Exception{
-		barberService.deleteBarber(id);
+		employeeService.deleteBarber(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping("/barber/{id}")
-	public ResponseEntity<BarberDTO> updateBarber(@RequestBody BarberDTO dto, @PathVariable Long id){
-		BarberDTO update = barberService.updateBarber(dto, id);
+	public ResponseEntity<EmployeeDTO> updateBarber(@RequestBody EmployeeDTO dto, @PathVariable Long id){
+		EmployeeDTO update = employeeService.updateBarber(dto, id);
 		return ResponseEntity.ok(update);
 	}
 	
 	@PostMapping("/barbershop")
-	public ResponseEntity<BarbershopDTO> createBarbershop(@RequestBody BarbershopDTO dto){
-		BarbershopDTO newShop = shopService.createBarbershop(dto);
+	public ResponseEntity<BusinessDTO> createBarbershop(@RequestBody BusinessDTO dto){
+		BusinessDTO newShop = businessService.createBarbershop(dto);
 		return ResponseEntity.ok(newShop);
 	}
 	
 	@GetMapping("/barbershop")
-	public ResponseEntity<List<BarbershopDTO>> findAllBarbershop(){
-		List<BarbershopDTO> listShop = shopService.findAllBarbershop();
+	public ResponseEntity<List<BusinessDTO>> findAllBarbershop(){
+		List<BusinessDTO> listShop = businessService.findAllBarbershop();
 		return ResponseEntity.ok(listShop);
 	}
 	

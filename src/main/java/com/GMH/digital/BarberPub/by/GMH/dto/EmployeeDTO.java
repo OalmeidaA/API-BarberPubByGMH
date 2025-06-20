@@ -3,10 +3,10 @@ package com.GMH.digital.BarberPub.by.GMH.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.GMH.digital.BarberPub.by.GMH.entities.Barber;
-import com.GMH.digital.BarberPub.by.GMH.entities.Scheduling;
+import com.GMH.digital.BarberPub.by.GMH.entities.Employee;
+import com.GMH.digital.BarberPub.by.GMH.entities.Booking;
 
-public class BarberDTO implements Serializable {
+public class EmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
@@ -16,11 +16,11 @@ public class BarberDTO implements Serializable {
 	private Long barbershopId;
 	private List schedulings;
 	
-	public BarberDTO() {
+	public EmployeeDTO() {
 		
 	}
 
-	public BarberDTO(String name, String specialty, Long id, Long barbershopId, List schedulings) {
+	public EmployeeDTO(String name, String specialty, Long id, Long barbershopId, List schedulings) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,7 +29,7 @@ public class BarberDTO implements Serializable {
 		this.schedulings = schedulings;
 	}
 	
-	public BarberDTO(Barber barber) {
+	public EmployeeDTO(Employee barber) {
 		id = barber.getId();
 		name = barber.getName();
 		specialty = barber.getSpecialty();
@@ -38,7 +38,7 @@ public class BarberDTO implements Serializable {
 			barbershopId = barber.getBarbershop().getId();
 		}
 		
-		List<Scheduling> list = barber.getSchedulings();
+		List<Booking> list = barber.getSchedulings();
 	}
 
 	public String getName() {

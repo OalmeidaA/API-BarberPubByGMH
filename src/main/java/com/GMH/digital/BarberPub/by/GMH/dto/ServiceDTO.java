@@ -3,15 +3,15 @@ package com.GMH.digital.BarberPub.by.GMH.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.GMH.digital.BarberPub.by.GMH.entities.Barbershop;
-import com.GMH.digital.BarberPub.by.GMH.entities.Scheduling;
-import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
+import com.GMH.digital.BarberPub.by.GMH.entities.Business;
+import com.GMH.digital.BarberPub.by.GMH.entities.Booking;
+import com.GMH.digital.BarberPub.by.GMH.entities.Service;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-public class ServicesBarberDTO implements Serializable {
+public class ServiceDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -21,22 +21,22 @@ public class ServicesBarberDTO implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "tb_barbershop_id")
-	private Barbershop barbershop;
+	private Business barbershop;
 	
 	@OneToMany(mappedBy = "service")
-	private List<Scheduling> schedulings;
+	private List<Booking> bookings;
 	
-	public ServicesBarberDTO() {
+	public ServiceDTO() {
 		
 	}
 	
-	public ServicesBarberDTO(ServicesBarber servicesBarber) {
+	public ServiceDTO(Service servicesBarber) {
 		id = servicesBarber.getId();
 		name = servicesBarber.getName();
 		price = servicesBarber.getPrice();
 		duration = servicesBarber.getDuration();
 		barbershop = servicesBarber.getBarbershop();
-		List<Scheduling> listScheduling = servicesBarber.getScheduling();
+		List<Booking> listScheduling = servicesBarber.getScheduling();
 	}
 
 	public String getName() {

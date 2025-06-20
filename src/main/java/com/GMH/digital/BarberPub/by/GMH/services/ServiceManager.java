@@ -3,30 +3,30 @@ package com.GMH.digital.BarberPub.by.GMH.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 import org.springframework.transaction.annotation.Transactional;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.ServicesBarberDTO;
-import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
+import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDTO;
+import com.GMH.digital.BarberPub.by.GMH.entities.Service;
 import com.GMH.digital.BarberPub.by.GMH.repositories.ServiceRespository;
 
 import jakarta.persistence.EntityNotFoundException;
 
-@Service
-public class ServicesBarberService {
+@org.springframework.stereotype.Service
+public class ServiceManager {
 	
 	@Autowired
 	private ServiceRespository serviceRespository;
 	
 	@Transactional(readOnly = true)
-	public List<ServicesBarber> findAllServices() {
-		List<ServicesBarber> list = serviceRespository.findAll();
+	public List<Service> findAllServices() {
+		List<Service> list = serviceRespository.findAll();
 		return list;
 	}
 	
 	@Transactional
-	public ServicesBarber insertService(ServicesBarberDTO service) {
-		ServicesBarber newService = new ServicesBarber(service);
+	public Service insertService(ServiceDTO service) {
+		Service newService = new Service(service);
 		serviceRespository.save(newService);
 		return newService;
 	}
@@ -41,20 +41,20 @@ public class ServicesBarberService {
 	}
 	
 	@Transactional
-	public ServicesBarberDTO updateServices(Long id, ServicesBarberDTO serviceDto) throws Exception {
+	public ServiceDTO updateServices(Long id, ServiceDTO serviceDto) throws Exception {
 		
 		try {
-		ServicesBarber service = serviceRespository.getReferenceById(id);
+		Service service = serviceRespository.getReferenceById(id);
 		copy(serviceDto, service);
 		serviceRespository.save(service);
-		return new ServicesBarberDTO(service);
+		return new ServiceDTO(service);
 		} 
 		catch(EntityNotFoundException e) {
 			throw new Exception("Serviço não encontrado para atualização");
 		}
 	}
 	
-	public void copy(ServicesBarberDTO dto, ServicesBarber entity) {
+	public void copy(ServiceDTO dto, Service entity) {
 		entity.setName(dto.getName());
 		entity.setDuration(dto.getDuration());
 		entity.setPrice(dto.getPrice());

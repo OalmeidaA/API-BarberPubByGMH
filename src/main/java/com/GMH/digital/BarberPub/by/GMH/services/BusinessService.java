@@ -7,34 +7,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.BarbershopDTO;
-import com.GMH.digital.BarberPub.by.GMH.entities.Barber;
-import com.GMH.digital.BarberPub.by.GMH.entities.Barbershop;
-import com.GMH.digital.BarberPub.by.GMH.repositories.BarbershopRespository;
+import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
+import com.GMH.digital.BarberPub.by.GMH.entities.Employee;
+import com.GMH.digital.BarberPub.by.GMH.entities.Business;
+import com.GMH.digital.BarberPub.by.GMH.repositories.BusinessRespository;
 
 @Service
-public class BarbershopService {
+public class BusinessService {
 
 	@Autowired
-	private BarbershopRespository repository;
+	private BusinessRespository repository;
 	
 	@Transactional
-	public BarbershopDTO createBarbershop(BarbershopDTO dto){
-		Barbershop newBarbershop = new Barbershop(dto);
+	public BusinessDTO createBarbershop(BusinessDTO dto){
+		Business newBarbershop = new Business(dto);
 		repository.save(newBarbershop);
-		BarbershopDTO shopDTO = new BarbershopDTO(newBarbershop);
+		BusinessDTO shopDTO = new BusinessDTO(newBarbershop);
 		return shopDTO;
 	}
 	
 	@Transactional(readOnly = true)
-	public List<BarbershopDTO> findAllBarbershop(){
-		List<Barbershop> list = repository.findAll();
-		List<BarbershopDTO> listDto = list.stream().map(x -> new BarbershopDTO(x)).collect(Collectors.toList());
+	public List<BusinessDTO> findAllBarbershop(){
+		List<Business> list = repository.findAll();
+		List<BusinessDTO> listDto = list.stream().map(x -> new BusinessDTO(x)).collect(Collectors.toList());
 		return listDto;
 	}
 	
-	public Barbershop fromDTO(BarbershopDTO dto) {
-		Barbershop barbershop = new Barbershop();
+	public Business fromDTO(BusinessDTO dto) {
+		Business barbershop = new Business();
 		barbershop.setName(dto.getName());
 		barbershop.setEmail(dto.getEmail());
 		barbershop.setAddress(dto.getAddress());
@@ -43,8 +43,8 @@ public class BarbershopService {
 		barbershop.setPhone(dto.getPhone());
 	
 		
-		List<Barber> barberList = dto.getBarbers().stream().map(barberDTO -> {
-			Barber barber = new Barber();
+		List<Employee> barberList = dto.getBarbers().stream().map(barberDTO -> {
+			Employee barber = new Employee();
 			barber.setName(barberDTO.getName());
 			barber.setSpecialty(barberDTO.getSpecialty());
 			barber.setBarbershop(barbershop); 

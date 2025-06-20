@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.ServicesBarberDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_service")
-public class ServicesBarber implements Serializable {
+public class Service implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -29,21 +29,21 @@ public class ServicesBarber implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "tb_barbershop_id")
-	private Barbershop barbershop;
+	private Business barbershop;
 	
 	@OneToMany(mappedBy = "service")
-	private List<Scheduling> schedulings;
+	private List<Booking> bookings;
 	
-	public ServicesBarber() {
+	public Service() {
 	}
 	
-	public ServicesBarber(ServicesBarberDTO service) {
+	public Service(ServiceDTO service) {
 		name = service.getName();
 		price = service.getPrice();
 		duration = service.getDuration();
 	}
 
-	public ServicesBarber(Long id, String name, Integer price, String duration, Barbershop barbershop) {
+	public Service(Long id, String name, Integer price, String duration, Business barbershop) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -51,8 +51,8 @@ public class ServicesBarber implements Serializable {
 		this.barbershop = barbershop;
 	}
 	
-	public List<Scheduling> getScheduling(){
-		return schedulings;
+	public List<Booking> getScheduling(){
+		return bookings;
 	}
 
 	public Long getId() {
@@ -87,11 +87,11 @@ public class ServicesBarber implements Serializable {
 		this.duration = duration;
 	}
 
-	public Barbershop getBarbershop() {
+	public Business getBarbershop() {
 		return barbershop;
 	}
 
-	public void setBarbershop(Barbershop barbershop) {
+	public void setBarbershop(Business barbershop) {
 		this.barbershop = barbershop;
 	}
 
@@ -108,7 +108,7 @@ public class ServicesBarber implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ServicesBarber other = (ServicesBarber) obj;
+		Service other = (Service) obj;
 		return Objects.equals(id, other.id);
 	}
 }

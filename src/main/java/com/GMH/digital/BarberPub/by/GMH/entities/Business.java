@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.BarberDTO;
-import com.GMH.digital.BarberPub.by.GMH.dto.BarbershopDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.EmployeeDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_barbershop")
-public class Barbershop implements Serializable {
+public class Business implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -39,18 +39,18 @@ public class Barbershop implements Serializable {
 	
 	
 	@OneToMany(mappedBy = "barbershop")
-	private List<User> users;
+	private List<Customer> users;
 	
 	@OneToMany(mappedBy = "barbershop", fetch = FetchType.EAGER)
-	private List<Barber> barbers;
+	private List<Employee> barbers;
 	
 	@OneToMany(mappedBy = "barbershop")
-	private List<ServicesBarber> services;
+	private List<Service> services;
 
-	public Barbershop() {
+	public Business() {
 	}
 
-	public Barbershop(Long id, String name, String cnpj, String address, String email, String phone, String description) {
+	public Business(Long id, String name, String cnpj, String address, String email, String phone, String description) {
 		this.id = id;
 		this.name = name;
 		this.cnpj = cnpj;
@@ -60,7 +60,7 @@ public class Barbershop implements Serializable {
 		this.description = description;
 	}
 	
-	public Barbershop(BarbershopDTO dto) {
+	public Business(BusinessDTO dto) {
 		id = dto.getId();
 		name = dto.getName();
 		email = dto.getEmail();
@@ -69,7 +69,7 @@ public class Barbershop implements Serializable {
 		address = dto.getAddress();
 		description = dto.getDescription();
 		users = dto.getUsers();
-		barbers = dto.getBarbers().stream().map(Barber::new).collect(Collectors.toList());
+		barbers = dto.getBarbers().stream().map(Employee::new).collect(Collectors.toList());
 		services = dto.getServices();
 	}
 
@@ -129,27 +129,27 @@ public class Barbershop implements Serializable {
 		this.description = description;
 	}
 	
-	public List<User> getUsers() {
+	public List<Customer> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(List<Customer> users) {
 		this.users = users;
 	}
 
-	public List<Barber> getBarbers() {
+	public List<Employee> getBarbers() {
 		return barbers;
 	}
 
-	public void setBarbers(List<Barber> barbers) {
+	public void setBarbers(List<Employee> barbers) {
 		this.barbers = barbers;
 	}
 
-	public List<ServicesBarber> getServices() {
+	public List<Service> getServices() {
 		return services;
 	}
 
-	public void setServices(List<ServicesBarber> services) {
+	public void setServices(List<Service> services) {
 		this.services = services;
 	}
 
@@ -166,7 +166,7 @@ public class Barbershop implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Barbershop other = (Barbershop) obj;
+		Business other = (Business) obj;
 		return Objects.equals(cnpj, other.cnpj) && Objects.equals(id, other.id);
 	}
 

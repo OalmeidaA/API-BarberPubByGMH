@@ -2,8 +2,8 @@ package com.GMH.digital.BarberPub.by.GMH.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
+import com.GMH.digital.BarberPub.by.GMH.entities.Service;
 
-public interface ServiceRespository extends JpaRepository<ServicesBarber, Long> {
+public interface ServiceRespository extends JpaRepository<Service, Long> {
 
 }

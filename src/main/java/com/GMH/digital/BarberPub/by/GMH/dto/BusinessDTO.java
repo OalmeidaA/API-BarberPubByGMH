@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.GMH.digital.BarberPub.by.GMH.entities.Barbershop;
-import com.GMH.digital.BarberPub.by.GMH.entities.ServicesBarber;
-import com.GMH.digital.BarberPub.by.GMH.entities.User;
+import com.GMH.digital.BarberPub.by.GMH.entities.Business;
+import com.GMH.digital.BarberPub.by.GMH.entities.Service;
+import com.GMH.digital.BarberPub.by.GMH.entities.Customer;
 
 import jakarta.persistence.Column;
 
-public class BarbershopDTO implements Serializable{
+public class BusinessDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
@@ -24,14 +24,14 @@ public class BarbershopDTO implements Serializable{
 	private String address;
 	private String description;
 	
-	private List<User> users = new ArrayList<>();
-	private List<BarberDTO> barbers = new ArrayList<>();
-	private List<ServicesBarber> services = new ArrayList<>();
+	private List<Customer> users = new ArrayList<>();
+	private List<EmployeeDTO> barbers = new ArrayList<>();
+	private List<Service> services = new ArrayList<>();
 	
-	public BarbershopDTO() {
+	public BusinessDTO() {
 	}
 	
-	public BarbershopDTO(Barbershop barbershop) {
+	public BusinessDTO(Business barbershop) {
 		id = barbershop.getId();
 		name = barbershop.getName();
 		email = barbershop.getEmail();
@@ -40,12 +40,12 @@ public class BarbershopDTO implements Serializable{
 		address = barbershop.getAddress();
 		description = barbershop.getDescription();
 		users = barbershop.getUsers();
-		barbers = barbershop.getBarbers().stream().map(BarberDTO::new).collect(Collectors.toList());
+		barbers = barbershop.getBarbers().stream().map(EmployeeDTO::new).collect(Collectors.toList());
 		services = barbershop.getServices();
 	}
 
-	public BarbershopDTO(Long id, String name, String email, String phone, String cnpj, String address, String description,
-			List<User> users, List<BarberDTO> barbers, List<ServicesBarber> services) {
+	public BusinessDTO(Long id, String name, String email, String phone, String cnpj, String address, String description,
+			List<Customer> users, List<EmployeeDTO> barbers, List<Service> services) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -106,27 +106,27 @@ public class BarbershopDTO implements Serializable{
 		this.description = description;
 	}
 
-	public List<User> getUsers() {
+	public List<Customer> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(List<Customer> users) {
 		this.users = users;
 	}
 
-	public List<BarberDTO> getBarbers() {
+	public List<EmployeeDTO> getBarbers() {
 		return barbers;
 	}
 
-	public void setBarbers(List<BarberDTO> barbers) {
+	public void setBarbers(List<EmployeeDTO> barbers) {
 		this.barbers = barbers;
 	}
 
-	public List<ServicesBarber> getServices() {
+	public List<Service> getServices() {
 		return services;
 	}
 
-	public void setServices(List<ServicesBarber> services) {
+	public void setServices(List<Service> services) {
 		this.services = services;
 	}
 

@@ -3,11 +3,11 @@ package com.GMH.digital.BarberPub.by.GMH.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.GMH.digital.BarberPub.by.GMH.entities.Scheduling;
+import com.GMH.digital.BarberPub.by.GMH.entities.Booking;
 import com.GMH.digital.BarberPub.by.GMH.entities.Status;
 
 
-public class SchedulingDTO implements Serializable{
+public class BookingDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -19,20 +19,20 @@ public class SchedulingDTO implements Serializable{
 	private Long serviceId;
 	private Status status;
 	
-	public SchedulingDTO() {
+	public BookingDTO() {
 		
 	}
 	
-	public SchedulingDTO(Scheduling scheduling) {
-		id = scheduling.getId();
-		date = scheduling.getDate();
-		appointmentHour = scheduling.getAppointmentHour();
-		barberId = scheduling.getBarber().getId();
-		serviceId = scheduling.getService().getId();
-		status = scheduling.getStatus();
+	public BookingDTO(Booking booking) {
+		id = booking.getId();
+		date = booking.getDate();
+		appointmentHour = booking.getAppointmentHour();
+		barberId = booking.getBarber().getId();
+		serviceId = booking.getService().getId();
+		status = booking.getStatus();
 	}
 
-	public SchedulingDTO(Long id, LocalDate date, String appointmentHour, Long barberId, Long serviceId, Status status) {
+	public BookingDTO(Long id, LocalDate date, String appointmentHour, Long barberId, Long serviceId, Status status) {
 		super();
 		this.id = id;
 		this.date = date;
