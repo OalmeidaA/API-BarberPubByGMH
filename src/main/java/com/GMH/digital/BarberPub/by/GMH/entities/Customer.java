@@ -1,124 +1,111 @@
 package com.GMH.digital.BarberPub.by.GMH.entities;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "customers")
 public class Customer implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	private String name;
-	
-	@Column(unique = true)
-	private String email;
-	
-	private String password;
-	private String phone;
-	
-	@Enumerated(EnumType.STRING)
-	private Role role;
-	
-	@ManyToOne
-	private Business barbershop;
-	
-	@OneToMany(mappedBy = "customer")
-	private List<Booking> bookings;
 
-	public Customer() {
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public Customer(Long id, String name, String email, String password, String phone, Role role) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.phone = phone;
-		this.role = role;
-	}
+    private String name;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(unique = true)
+    private String email;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private String password;
+    private String phone;
 
-	public String getName() {
-		return name;
-	}
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
+    @ManyToOne
+    @JoinColumn(name = "business_id", nullable = true)
+    private Business business;
 
-	public String getEmail() {
-		return email;
-	}
+    public Customer() {
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Customer(Long id, String name, String email, String password, String phone, Role role) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	
-	public String getPhone() {
-		return phone;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Customer other = (Customer) obj;
-		return Objects.equals(id, other.id);
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Customer other = (Customer) obj;
+        return Objects.equals(id, other.id);
+    }
+
+
 }

@@ -1,73 +1,65 @@
 package com.GMH.digital.BarberPub.by.GMH.dto;
 
-import java.io.Serializable;
-import java.util.List;
-
-import com.GMH.digital.BarberPub.by.GMH.entities.Booking;
-import com.GMH.digital.BarberPub.by.GMH.entities.Business;
 import com.GMH.digital.BarberPub.by.GMH.entities.Service;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import java.io.Serializable;
 
 public class ServiceDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private String name;
-	private Integer price;
-	private String duration;
-	
-	@ManyToOne
-	private Business barbershop;
-	
-	@OneToMany(mappedBy = "service")
-	private List<Booking> bookings;
-	
-	public ServiceDTO() {
-		
-	}
-	
-	public ServiceDTO(Service servicesBarber) {
-		id = servicesBarber.getId();
-		name = servicesBarber.getName();
-		price = servicesBarber.getPrice();
-		duration = servicesBarber.getDuration();
-		barbershop = servicesBarber.getBarbershop();
-		List<Booking> listScheduling = servicesBarber.getScheduling();
-	}
+    private Long id;
+    private String name;
+    private Integer price;
+    private String duration;
+    private Long bussinessId;
 
-	public String getName() {
-		return name;
-	}
+    public ServiceDTO() {
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public ServiceDTO(Service service) {
+        id = service.getId();
+        name = service.getName();
+        price = service.getPrice();
+        duration = service.getDuration();
+        bussinessId = service.getBusiness().getId();
+    }
 
-	public Integer getPrice() {
-		return price;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getDuration() {
-		return duration;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Integer getPrice() {
+        return price;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
 
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public Long getBussinessId() {
+        return bussinessId;
+    }
+
+    public void setBussinessId(Long bussinessId) {
+        this.bussinessId = bussinessId;
+    }
 }

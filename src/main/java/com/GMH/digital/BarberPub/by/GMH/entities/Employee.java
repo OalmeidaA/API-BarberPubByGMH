@@ -18,25 +18,24 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "employees")
 public class Employee implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String specialty;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "business_id")
 	private Business barbershop;
-	
+
 	@OneToMany(mappedBy = "employee")
 	private List<Booking> bookings;
-	
+
 	public Employee() {
-		
+
 	}
-	
+
 	public Employee(EmployeeDTO barber) {
 		name = barber.getName();
 		specialty = barber.getSpecialty();
@@ -105,5 +104,5 @@ public class Employee implements Serializable {
 		Employee other = (Employee) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }

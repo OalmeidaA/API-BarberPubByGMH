@@ -27,7 +27,7 @@ public class BookingDTO implements Serializable{
 		id = booking.getId();
 		date = booking.getDate();
 		appointmentHour = booking.getAppointmentHour();
-		barberId = booking.getBarber().getId();
+		barberId = booking.getEmployee().getId();
 		serviceId = booking.getService().getId();
 		status = booking.getStatus();
 	}

@@ -34,7 +34,7 @@ public class CustomerService {
 		Booking booking = new Booking();
 		booking.setDate(dto.getDate());
 		booking.setAppointmentHour(dto.getAppointmentHour());
-		booking.setBarber(barber);
+		booking.setEmployee(barber);
 		booking.setService(service);
 		booking.setStatus(dto.getStatus());
 	

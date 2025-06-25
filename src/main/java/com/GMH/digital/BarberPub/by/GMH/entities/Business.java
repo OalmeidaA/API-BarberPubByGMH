@@ -1,172 +1,127 @@
 package com.GMH.digital.BarberPub.by.GMH.entities;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "business")
 public class Business implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private String email;
-	private String phone;
-	
-	@Column(unique = true)
-	private String cnpj;
-	private String address;
-	
-	@Lob
-	private String description;
-	
-	
-	@OneToMany(mappedBy = "business")
-	private List<Customer> users;
-	
-	@OneToMany(mappedBy = "business", fetch = FetchType.EAGER)
-	private List<Employee> barbers;
-	
-	@OneToMany(mappedBy = "business")
-	private List<Service> services;
 
-	public Business() {
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public Business(Long id, String name, String cnpj, String address, String email, String phone, String description) {
-		this.id = id;
-		this.name = name;
-		this.cnpj = cnpj;
-		this.address = address;
-		this.email = email;
-		this.phone = phone;
-		this.description = description;
-	}
-	
-	public Business(BusinessDTO dto) {
-		id = dto.getId();
-		name = dto.getName();
-		email = dto.getEmail();
-		phone = dto.getPhone();
-		cnpj = dto.getCnpj();
-		address = dto.getAddress();
-		description = dto.getDescription();
-		users = dto.getUsers();
-		barbers = dto.getBarbers().stream().map(Employee::new).collect(Collectors.toList());
-		services = dto.getServices();
-	}
+    private String name;
 
-	public Long getId() {
-		return id;
-	}
+    private String email;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private String phone;
 
-	public String getName() {
-		return name;
-	}
+    @Column(unique = true)
+    private String cnpj;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String address;
 
-	public String getCnpj() {
-		return cnpj;
-	}
+    @Lob
+    private String description;
 
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
+    public Business() {
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public Business(Long id, String name, String cnpj, String address, String email, String phone, String description) {
+        this.id = id;
+        this.name = name;
+        this.cnpj = cnpj;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.description = description;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
+    public Business(BusinessDTO dto) {
+        id = dto.getId();
+        name = dto.getName();
+        email = dto.getEmail();
+        phone = dto.getPhone();
+        cnpj = dto.getCnpj();
+        address = dto.getAddress();
+        description = dto.getDescription();
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public List<Customer> getUsers() {
-		return users;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setUsers(List<Customer> users) {
-		this.users = users;
-	}
+    public String getCnpj() {
+        return cnpj;
+    }
 
-	public List<Employee> getBarbers() {
-		return barbers;
-	}
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
 
-	public void setBarbers(List<Employee> barbers) {
-		this.barbers = barbers;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public List<Service> getServices() {
-		return services;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setServices(List<Service> services) {
-		this.services = services;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(cnpj, id);
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Business other = (Business) obj;
-		return Objects.equals(cnpj, other.cnpj) && Objects.equals(id, other.id);
-	}
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cnpj, id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Business other = (Business) obj;
+        return Objects.equals(cnpj, other.cnpj) && Objects.equals(id, other.id);
+    }
 
 }
