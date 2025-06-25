@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Profile("test")
+@Profile("dev")
 @Configuration
 public class DataLoader implements CommandLineRunner {
 
@@ -24,8 +24,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        businessRespository.deleteAll();
         serviceRespository.deleteAll();
+        businessRespository.deleteAll();
 
         List<Business> fakeBusinesses = getFakeBusinesses();
         businessRespository.saveAll(fakeBusinesses);
