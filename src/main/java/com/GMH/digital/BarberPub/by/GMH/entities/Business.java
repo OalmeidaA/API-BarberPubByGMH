@@ -2,8 +2,10 @@ package com.GMH.digital.BarberPub.by.GMH.entities;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +29,10 @@ public class Business implements Serializable {
 
     @Lob
     private String description;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Instant createdAt;
 
     public Business() {
     }
@@ -105,6 +111,14 @@ public class Business implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

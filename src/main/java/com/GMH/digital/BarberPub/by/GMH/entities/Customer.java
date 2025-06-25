@@ -1,8 +1,10 @@
 package com.GMH.digital.BarberPub.by.GMH.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +29,10 @@ public class Customer implements Serializable {
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = true)
     private Business business;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Instant createdAt;
 
     public Customer() {
     }
@@ -88,6 +94,14 @@ public class Customer implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

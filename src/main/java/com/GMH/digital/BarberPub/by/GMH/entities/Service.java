@@ -2,8 +2,10 @@ package com.GMH.digital.BarberPub.by.GMH.entities;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDTO;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +25,10 @@ public class Service implements Serializable {
     @ManyToOne
     @JoinColumn(name = "business_id")
     private Business business;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Instant createdAt;
 
     public Service() {
     }
@@ -71,6 +77,14 @@ public class Service implements Serializable {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Business getBusiness() {
