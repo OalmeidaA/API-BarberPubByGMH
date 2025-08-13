@@ -40,6 +40,18 @@ public class CustomerService {
         return new CustomerDTO(customer);
     }
 
+    public void updateCurrentCustomer(CustomerDTO dto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        Customer customer = customerRepository.findByUser(user)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found for current user"));
+
+        customer.setName(dto.getName());
+        customer.setBirthDate(dto.getBirthDate());
+        customer.setPhone(dto.getPhone());
+        customerRepository.save(customer);
+    }
+
     @Transactional
     public Booking scheduleService(BookingDTO dto) {
         Employee barber = employeeRepository.findById(dto.getBarberId()).orElseThrow(() -> new ResourceNotFoundException("Id of Barber not Found"));
@@ -55,5 +67,6 @@ public class CustomerService {
 
         return schedulingRepository.save(booking);
     }
+
 
 }

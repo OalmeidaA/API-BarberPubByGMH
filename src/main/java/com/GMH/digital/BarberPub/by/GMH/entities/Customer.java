@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -37,6 +38,8 @@ public class Customer implements Serializable {
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;
+
+    private LocalDate birthDate;
 
     public Customer() {
     }
@@ -121,6 +124,14 @@ public class Customer implements Serializable {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override

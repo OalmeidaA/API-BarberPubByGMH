@@ -1,86 +1,99 @@
 package com.GMH.digital.BarberPub.by.GMH.dto;
 
-import java.io.Serializable;
-
-import com.GMH.digital.BarberPub.by.GMH.entities.Role;
 import com.GMH.digital.BarberPub.by.GMH.entities.Customer;
+import com.GMH.digital.BarberPub.by.GMH.entities.Role;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 
 public class CustomerDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	private Long id;
-	private String name;
-	private String email;
-	private String password;
-	private String phone;
-	private Role role;
-	
-	public CustomerDTO() {
-		
-	}
+    private static final long serialVersionUID = 1L;
 
-	public CustomerDTO(String name, String email, String password, String phone, Role role) {
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.phone = phone;
-		this.role = role;
-	}
-	
-	public CustomerDTO (Customer user) {
-		id = user.getId();
-		name = user.getName();
-		email = user.getEmail();
-		password = user.getPassword();
-		role = user.getRole();
-	}
+    private Long id;
+    private String name;
+    private String email;
+    private String password;
+    private String phone;
+    private Role role;
+    private LocalDate birthDate;
 
-	public String getName() {
-		return name;
-	}
+    public CustomerDTO() {
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public CustomerDTO(String name, String email, String password, String phone, Role role, LocalDate birthDate) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+        this.birthDate = birthDate;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public CustomerDTO(Customer user) {
+        id = user.getId();
+        name = user.getName();
+        email = user.getEmail();
+        password = user.getPassword();
+        role = user.getRole();
+        phone = user.getPhone();
+        birthDate = user.getBirthDate();
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
 
 }

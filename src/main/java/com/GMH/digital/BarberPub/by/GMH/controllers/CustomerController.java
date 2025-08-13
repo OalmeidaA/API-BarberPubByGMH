@@ -32,6 +32,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerDTO);
     }
 
+    @PutMapping("/me")
+    public ResponseEntity<Void> updateCurrentCustomer(@RequestBody CustomerDTO dto) {
+        customerService.updateCurrentCustomer(dto);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public ResponseEntity<List<ServiceDTO>> findAllServices() {
         List<Service> list = servicesBarberService.findAllServices();
@@ -45,5 +51,6 @@ public class CustomerController {
         BookingDTO schedulingDto = new BookingDTO(newScheduling);
         return ResponseEntity.ok(schedulingDto);
     }
+
 
 }
