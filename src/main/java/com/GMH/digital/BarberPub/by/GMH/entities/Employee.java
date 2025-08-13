@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,24 +13,28 @@ import java.util.Objects;
 public class Employee implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
+
     private String name;
+
     private String specialty;
 
-    @ManyToOne
-    @JoinColumn(name = "business_id")
-    private Business barbershop;
+    private String role;
 
-    @OneToMany(mappedBy = "employee")
-    private List<Booking> bookings;
+    @ManyToOne
+    @JoinColumn(name = "business_id", nullable = false)
+    private Business business;
 
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;
 
     public Employee() {
-
     }
 
     public Employee(EmployeeDTO barber) {
@@ -39,11 +42,11 @@ public class Employee implements Serializable {
         specialty = barber.getSpecialty();
     }
 
-    public Employee(Long id, String name, String specialty, Business barbershop) {
+    public Employee(Long id, String name, String specialty, Business business) {
         this.id = id;
         this.name = name;
         this.specialty = specialty;
-        this.barbershop = barbershop;
+        this.business = business;
     }
 
     public Long getId() {
@@ -52,6 +55,14 @@ public class Employee implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -70,22 +81,21 @@ public class Employee implements Serializable {
         this.specialty = specialty;
     }
 
-    public Business getBarbershop() {
-        return barbershop;
+    public String getRole() {
+        return role;
     }
 
-    public void setBarbershop(Business barbershop) {
-        this.barbershop = barbershop;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public List<Booking> getSchedulings() {
-        return bookings;
+    public Business getBusiness() {
+        return business;
     }
 
-    public void setSchedulings(List<Booking> bookings) {
-        this.bookings = bookings;
+    public void setBusiness(Business business) {
+        this.business = business;
     }
-
 
     public Instant getCreatedAt() {
         return createdAt;

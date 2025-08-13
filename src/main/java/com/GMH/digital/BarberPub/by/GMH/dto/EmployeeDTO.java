@@ -1,84 +1,65 @@
 package com.GMH.digital.BarberPub.by.GMH.dto;
 
-import java.io.Serializable;
-import java.util.List;
-
-import com.GMH.digital.BarberPub.by.GMH.entities.Booking;
 import com.GMH.digital.BarberPub.by.GMH.entities.Employee;
 
+import java.io.Serializable;
+
 public class EmployeeDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	private Long id;
-	private String name;
-	private String specialty;
-	
-	private Long barbershopId;
-	private List schedulings;
-	
-	public EmployeeDTO() {
-		
-	}
+    private Long id;
+    private String name;
+    private String specialty;
+    private Long businessId;
 
-	public EmployeeDTO(String name, String specialty, Long id, Long barbershopId, List schedulings) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.specialty = specialty;
-		this.barbershopId = barbershopId;
-		this.schedulings = schedulings;
-	}
-	
-	public EmployeeDTO(Employee barber) {
-		id = barber.getId();
-		name = barber.getName();
-		specialty = barber.getSpecialty();
-		
-		if (barber.getBarbershop() != null) {
-			barbershopId = barber.getBarbershop().getId();
-		}
-		
-		List<Booking> list = barber.getSchedulings();
-	}
+    public EmployeeDTO() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    public EmployeeDTO(String name, String specialty, Long id, Long businessId) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.specialty = specialty;
+        this.businessId = businessId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public EmployeeDTO(Employee employee) {
+        id = employee.getId();
+        name = employee.getName();
+        specialty = employee.getSpecialty();
 
-	public String getSpecialty() {
-		return specialty;
-	}
+        if (employee.getBusiness() != null) {
+            businessId = employee.getBusiness().getId();
+        }
+    }
 
-	public void setSpecialty(String specialty) {
-		this.specialty = specialty;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Long getBarbershopId() {
-		return barbershopId;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setBarbershopId(Long barbershopId) {
-		this.barbershopId = barbershopId;
-	}
+    public String getSpecialty() {
+        return specialty;
+    }
 
-	public List getSchedulings() {
-		return schedulings;
-	}
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
 
-	public void setSchedulings(List schedulings) {
-		this.schedulings = schedulings;
-	}
+    public Long getBusinessId() {
+        return businessId;
+    }
 
+    public void setBusinessId(Long businessId) {
+        this.businessId = businessId;
+    }
 }

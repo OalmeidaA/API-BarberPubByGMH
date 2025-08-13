@@ -12,8 +12,12 @@ import java.util.Objects;
 public class Customer implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
     private String name;
 
@@ -27,7 +31,7 @@ public class Customer implements Serializable {
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "business_id", nullable = true)
+    @JoinColumn(name = "business_id")
     private Business business;
 
     @CreationTimestamp
@@ -55,6 +59,14 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getName() {
         return name;
     }
@@ -62,7 +74,6 @@ public class Customer implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getEmail() {
         return email;
@@ -80,6 +91,14 @@ public class Customer implements Serializable {
         this.password = password;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -88,12 +107,12 @@ public class Customer implements Serializable {
         this.role = role;
     }
 
-    public String getPhone() {
-        return phone;
+    public Business getBusiness() {
+        return business;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
     public Instant getCreatedAt() {
