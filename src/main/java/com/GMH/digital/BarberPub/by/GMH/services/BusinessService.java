@@ -2,8 +2,7 @@ package com.GMH.digital.BarberPub.by.GMH.services;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
 import com.GMH.digital.BarberPub.by.GMH.entities.Business;
-import com.GMH.digital.BarberPub.by.GMH.repositories.BusinessRespository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.GMH.digital.BarberPub.by.GMH.repositories.BusinessRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,21 +12,34 @@ import java.util.stream.Collectors;
 @Service
 public class BusinessService {
 
-    @Autowired
-    private BusinessRespository repository;
+    private final BusinessRepository repository;
+    private final EmployeeService employeeService;
+
+    public BusinessService(BusinessRepository repository, EmployeeService employeeService) {
+        this.repository = repository;
+        this.employeeService = employeeService;
+    }
+
+    @Transactional(readOnly = true)
+    public BusinessDTO getMyBusiness() {
+        Long businessId = employeeService.getCurrentEmployee().getBusinessId();
+        Business business = repository.findById(businessId)
+                .orElseThrow(() -> new IllegalArgumentException("Business not found with id: " + businessId));
+        return new BusinessDTO(business);
+    }
 
     @Transactional
-    public BusinessDTO createBusiness(BusinessDTO dto) {
+    public Business createBusiness(BusinessDTO dto) {
         Business newBarbershop = new Business(dto);
-        repository.save(newBarbershop);
-        return new BusinessDTO(newBarbershop);
+        return repository.save(newBarbershop);
     }
 
     @Transactional(readOnly = true)
     public List<BusinessDTO> findAllBusiness() {
-        List<Business> list = repository.findAll();
-        List<BusinessDTO> listDto = list.stream().map(x -> new BusinessDTO(x)).collect(Collectors.toList());
-        return listDto;
+        List<Business> businessList = repository.findAll();
+        return businessList.stream()
+                .map(BusinessDTO::new)
+                .collect(Collectors.toList());
     }
 
 }
