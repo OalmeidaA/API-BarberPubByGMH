@@ -1,63 +1,87 @@
 package com.GMH.digital.BarberPub.by.GMH.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.ServiceCreateDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDto;
+import com.GMH.digital.BarberPub.by.GMH.entities.Employee;
 import com.GMH.digital.BarberPub.by.GMH.entities.Service;
-import com.GMH.digital.BarberPub.by.GMH.repositories.ServiceRespository;
+import com.GMH.digital.BarberPub.by.GMH.entities.User;
+import com.GMH.digital.BarberPub.by.GMH.exception.ResourceNotFoundException;
+import com.GMH.digital.BarberPub.by.GMH.repositories.EmployeeRepository;
+import com.GMH.digital.BarberPub.by.GMH.repositories.ServiceRepository;
+import org.springframework.security.access.AccessDeniedException;
 
-import jakarta.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
+import java.util.List;
 
 @org.springframework.stereotype.Service
 public class ServiceManager {
-	
-	@Autowired
-	private ServiceRespository serviceRespository;
-	
-	@Transactional(readOnly = true)
-	public List<Service> findAllServices() {
-		List<Service> list = serviceRespository.findAll();
-		return list;
-	}
-	
-	@Transactional
-	public Service insertService(ServiceDTO service) {
-		Service newService = new Service(service);
-		serviceRespository.save(newService);
-		return newService;
-	}
-	
-	@Transactional
-	public void deleteService(Long id) throws Exception {
-		
-		if(!serviceRespository.existsById(id)) {
-			throw new Exception("Este Serviço não existe");
-		}
-		serviceRespository.deleteById(id);
-	}
-	
-	@Transactional
-	public ServiceDTO updateService(Long id, ServiceDTO serviceDto) throws Exception {
-		
-		try {
-		Service service = serviceRespository.getReferenceById(id);
-		copy(serviceDto, service);
-		serviceRespository.save(service);
-		return new ServiceDTO(service);
-		} 
-		catch(EntityNotFoundException e) {
-			throw new Exception("Serviço não encontrado para atualização");
-		}
-	}
-	
-	public void copy(ServiceDTO dto, Service entity) {
-		entity.setName(dto.getName());
-		entity.setDuration(dto.getDuration());
-		entity.setPrice(dto.getPrice());
-	}
-	
+
+    private final AuthenticatedUserService authenticatedUserService;
+    private final ServiceRepository serviceRepository;
+    private final EmployeeRepository employeeRepository;
+
+    public ServiceManager(
+            AuthenticatedUserService authenticatedUserService,
+            EmployeeRepository employeeRepository, ServiceRepository serviceRepository) {
+        this.authenticatedUserService = authenticatedUserService;
+        this.serviceRepository = serviceRepository;
+        this.employeeRepository = employeeRepository;
+    }
+
+    public List<ServiceDto> getServices() {
+        Long businessId = getBusinessId();
+        return serviceRepository.findByBusiness_Id(businessId)
+                .stream()
+                .map(ServiceDto::new)
+                .toList();
+    }
+
+    public ServiceDto createService(ServiceCreateDTO dto) {
+        User user = authenticatedUserService.getCurrentUser();
+        Employee employee = employeeRepository.findById(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for current user"));
+
+        Service service = new Service();
+        service.setName(dto.getName());
+        service.setDescription(dto.getDescription());
+        service.setPriceType(dto.getPriceType());
+        service.setPrice(BigDecimal.valueOf(dto.getPrice()));
+        service.setDurationMinutes(dto.getDurationMinutes());
+        service.setBusiness(employee.getBusiness());
+        service = serviceRepository.save(service);
+        return new ServiceDto(service);
+    }
+
+    public void updateService(Long id, ServiceDto dto) {
+        Service service = serviceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Service not found with id: " + id));
+        if (service.getBusinessId() != getBusinessId()) {
+            throw new AccessDeniedException("Service does not belong to the same business as the current user");
+        }
+
+        service.setName(dto.getName());
+        service.setDescription(dto.getDescription());
+        service.setPriceType(dto.getPriceType());
+        service.setPrice(dto.getPrice());
+        service.setDurationMinutes(dto.getDurationMinutes());
+
+        serviceRepository.save(service);
+    }
+
+    public void deleteService(Long id) {
+        Service service = serviceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Service not found with id: " + id));
+        if (service.getBusinessId() != getBusinessId()) {
+            throw new AccessDeniedException("Service does not belong to the same business as the current user");
+        }
+
+        serviceRepository.delete(service);
+    }
+
+    private Long getBusinessId() {
+        User user = authenticatedUserService.getCurrentUser();
+        Employee employee = employeeRepository.findById(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for current user"));
+        return employee.getBusinessId();
+    }
 }

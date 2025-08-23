@@ -1,10 +1,12 @@
 package com.GMH.digital.BarberPub.by.GMH.entities;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.ServiceCreateDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -18,33 +20,43 @@ public class Service implements Serializable {
 
     private String name;
 
-    private Integer price;
+    private String description;
 
-    private String duration;
+    private String priceType;
 
-    @ManyToOne
-    @JoinColumn(name = "business_id")
-    private Business business;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal price;
+
+    private int durationMinutes;
+
+    private boolean isAvailable;
 
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "business_id")
+    private Business business;
+
     public Service() {
     }
 
-    public Service(ServiceDTO service) {
-        name = service.getName();
-        price = service.getPrice();
-        duration = service.getDuration();
+    public Service(ServiceCreateDTO serviceCreateDTO) {
+        this.name = serviceCreateDTO.getName();
+        this.description = serviceCreateDTO.getDescription();
+        this.priceType = serviceCreateDTO.getPriceType();
+        this.price = BigDecimal.valueOf(serviceCreateDTO.getPrice());
+        this.durationMinutes = serviceCreateDTO.getDurationMinutes();
     }
 
-    public Service(Long id, String name, Integer price, String duration, Business business) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.duration = duration;
-        this.business = business;
+    public Service(ServiceDto service) {
+        name = service.getName();
+        description = service.getDescription();
+        priceType = service.getPriceType();
+        price = service.getPrice();
+        durationMinutes = service.getDurationMinutes();
+        isAvailable = service.getAvailable();
     }
 
     public Long getId() {
@@ -63,20 +75,44 @@ public class Service implements Serializable {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPriceType() {
+        return priceType;
+    }
+
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
+    }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public String getDuration() {
-        return duration;
+    public int getDurationMinutes() {
+        return durationMinutes;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setDurationMinutes(int durationMinutes) {
+        this.durationMinutes = durationMinutes;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
     public Instant getCreatedAt() {
@@ -85,6 +121,10 @@ public class Service implements Serializable {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public long getBusinessId() {
+        return business.getId();
     }
 
     public Business getBusiness() {

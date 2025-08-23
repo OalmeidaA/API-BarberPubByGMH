@@ -7,8 +7,12 @@ import java.io.Serializable;
 public class EmployeeDTO implements Serializable {
     private Long id;
     private String name;
-    private String specialty;
-    private Long businessId;
+    private String description;
+    private String countryCode;
+    private String phoneNumber;
+    private String email;
+    private boolean isActive;
+    private String role;
 
     public EmployeeDTO() {
     }
@@ -17,18 +21,17 @@ public class EmployeeDTO implements Serializable {
         super();
         this.id = id;
         this.name = name;
-        this.specialty = specialty;
-        this.businessId = businessId;
     }
 
     public EmployeeDTO(Employee employee) {
         id = employee.getId();
         name = employee.getName();
-        specialty = employee.getSpecialty();
-
-        if (employee.getBusiness() != null) {
-            businessId = employee.getBusiness().getId();
-        }
+        description = employee.getDescription();
+        countryCode = employee.getCountryCode();
+        phoneNumber = employee.getPhoneNumber();
+        email = employee.getEmail();
+        isActive = employee.isActive();
+        role = employee.getRole();
     }
 
     public Long getId() {
@@ -47,19 +50,51 @@ public class EmployeeDTO implements Serializable {
         this.name = name;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Long getBusinessId() {
-        return businessId;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setBusinessId(Long businessId) {
-        this.businessId = businessId;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

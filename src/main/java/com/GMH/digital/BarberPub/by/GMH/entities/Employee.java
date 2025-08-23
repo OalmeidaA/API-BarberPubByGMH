@@ -22,12 +22,23 @@ public class Employee implements Serializable {
 
     private String name;
 
-    private String specialty;
+    private String description;
 
+    private String countryCode;
+
+    private String phoneNumber;
+
+    private String email;
+
+    private String password;
+
+    private boolean isActive = true;
+
+    ///  "owner" or "employee"
     private String role;
 
     @ManyToOne
-    @JoinColumn(name = "business_id", nullable = false)
+    @JoinColumn(name = "business_id")
     private Business business;
 
     @CreationTimestamp
@@ -37,16 +48,14 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(EmployeeDTO barber) {
-        name = barber.getName();
-        specialty = barber.getSpecialty();
-    }
-
-    public Employee(Long id, String name, String specialty, Business business) {
-        this.id = id;
-        this.name = name;
-        this.specialty = specialty;
-        this.business = business;
+    public Employee(EmployeeDTO dto) {
+        id = dto.getId();
+        name = dto.getName();
+        description = dto.getDescription();
+        countryCode = dto.getCountryCode();
+        phoneNumber = dto.getPhoneNumber();
+        email = dto.getEmail();
+        isActive = dto.isActive();
     }
 
     public Long getId() {
@@ -73,12 +82,52 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public String getRole() {
@@ -87,6 +136,10 @@ public class Employee implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getBusinessId() {
+        return business != null ? business.getId() : null;
     }
 
     public Business getBusiness() {

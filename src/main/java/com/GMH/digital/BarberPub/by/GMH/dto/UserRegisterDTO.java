@@ -2,7 +2,7 @@ package com.GMH.digital.BarberPub.by.GMH.dto;
 
 import java.io.Serializable;
 
-public class RegisterDTO implements Serializable {
+public class UserRegisterDTO implements Serializable {
     private String firebaseUid;
     private String email;
 
@@ -10,21 +10,20 @@ public class RegisterDTO implements Serializable {
     private String role;
 
     private String name;
-    private String phone;
+    private String countryCode;
+    private String phoneNumber;
 
-    // apenas se for employee
-    private Long businessId;
-
-    public RegisterDTO() {
+    public UserRegisterDTO() {
     }
 
-    public RegisterDTO(String firebaseUid, String email, String role, String name, String phone, Long businessId) {
+    public UserRegisterDTO(
+            String firebaseUid, String email, String role, String name, String countryCode, String phoneNumber) {
         this.firebaseUid = firebaseUid;
         this.email = email;
         this.role = role;
         this.name = name;
-        this.phone = phone;
-        this.businessId = businessId;
+        this.countryCode = countryCode;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getFirebaseUid() {
@@ -59,19 +58,19 @@ public class RegisterDTO implements Serializable {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
-    public Long getBusinessId() {
-        return businessId;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setBusinessId(Long businessId) {
-        this.businessId = businessId;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

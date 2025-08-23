@@ -32,3 +32,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+firebase-adminsdk.json
+get-token.js
+token.txt

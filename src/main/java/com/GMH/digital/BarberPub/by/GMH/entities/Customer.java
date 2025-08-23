@@ -22,36 +22,30 @@ public class Customer implements Serializable {
 
     private String name;
 
+    private String image;
+
+    private String countryCode;
+
+    private String phoneNumber;
+
+    private LocalDate birthDate;
+
+    private String internalNote;
+
     @Column(unique = true)
     private String email;
 
     private String password;
-    private String phone;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
-    @ManyToOne
-    @JoinColumn(name = "business_id")
-    private Business business;
 
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;
 
-    private LocalDate birthDate;
+    @ManyToOne
+    @JoinColumn(name = "business_id")
+    private Business business;
 
     public Customer() {
-    }
-
-    public Customer(Long id, String name, String email, String password, String phone, Role role) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
     }
 
     public Long getId() {
@@ -78,6 +72,46 @@ public class Customer implements Serializable {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getInternalNote() {
+        return internalNote;
+    }
+
+    public void setInternalNote(String internalNote) {
+        this.internalNote = internalNote;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -94,20 +128,17 @@ public class Customer implements Serializable {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    public Long getBusinessId() {
+        return business != null ? business.getId() : null;
     }
 
     public Business getBusiness() {
@@ -118,38 +149,14 @@ public class Customer implements Serializable {
         this.business = business;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Customer customer)) return false;
+        return Objects.equals(id, customer.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hashCode(id);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Customer other = (Customer) obj;
-        return Objects.equals(id, other.id);
-    }
-
-
 }

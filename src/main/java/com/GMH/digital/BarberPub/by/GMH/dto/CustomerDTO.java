@@ -1,43 +1,44 @@
 package com.GMH.digital.BarberPub.by.GMH.dto;
 
 import com.GMH.digital.BarberPub.by.GMH.entities.Customer;
-import com.GMH.digital.BarberPub.by.GMH.entities.Role;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class CustomerDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     private Long id;
     private String name;
+    private String image;
+    private String countryCode;
+    private String phoneNumber;
+    private LocalDate birthDate;
+    private String internalNote;
     private String email;
     private String password;
-    private String phone;
-    private Role role;
-    private LocalDate birthDate;
+    private Long createdAt;
 
     public CustomerDTO() {
-
-    }
-
-    public CustomerDTO(String name, String email, String password, String phone, Role role, LocalDate birthDate) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
-        this.birthDate = birthDate;
     }
 
     public CustomerDTO(Customer user) {
         id = user.getId();
         name = user.getName();
+        image = user.getImage();
+        countryCode = user.getCountryCode();
+        phoneNumber = user.getPhoneNumber();
+        internalNote = user.getInternalNote();
+        birthDate = user.getBirthDate();
         email = user.getEmail();
         password = user.getPassword();
-        role = user.getRole();
-        phone = user.getPhone();
-        birthDate = user.getBirthDate();
+        createdAt = user.getCreatedAt() != null ? user.getCreatedAt().toEpochMilli() : null;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -46,6 +47,46 @@ public class CustomerDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getInternalNote() {
+        return internalNote;
+    }
+
+    public void setInternalNote(String internalNote) {
+        this.internalNote = internalNote;
     }
 
     public String getEmail() {
@@ -64,36 +105,11 @@ public class CustomerDTO implements Serializable {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public Long getCreatedAt() {
+        return createdAt;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
 }

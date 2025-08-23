@@ -1,9 +1,8 @@
 package com.GMH.digital.BarberPub.by.GMH.config;
 
 import com.GMH.digital.BarberPub.by.GMH.entities.Business;
-import com.GMH.digital.BarberPub.by.GMH.entities.Service;
-import com.GMH.digital.BarberPub.by.GMH.repositories.BusinessRespository;
-import com.GMH.digital.BarberPub.by.GMH.repositories.ServiceRespository;
+import com.GMH.digital.BarberPub.by.GMH.repositories.BusinessRepository;
+import com.GMH.digital.BarberPub.by.GMH.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -17,22 +16,22 @@ import java.util.List;
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
-    private BusinessRespository businessRespository;
+    private BusinessRepository businessRepository;
 
     @Autowired
-    private ServiceRespository serviceRespository;
+    private ServiceRepository serviceRepository;
 
     @Override
     public void run(String... args) {
-        serviceRespository.deleteAll();
-        businessRespository.deleteAll();
-
-        List<Business> fakeBusinesses = getFakeBusinesses();
-        businessRespository.saveAll(fakeBusinesses);
-
-        for (Business business : fakeBusinesses) {
-            serviceRespository.saveAll(getFakeServices(business));
-        }
+//        serviceRespository.deleteAll();
+//        businessRespository.deleteAll();
+//
+//        List<Business> fakeBusinesses = getFakeBusinesses();
+//        businessRespository.saveAll(fakeBusinesses);
+//
+//        for (Business business : fakeBusinesses) {
+//            serviceRespository.saveAll(getFakeServices(business));
+//        }
     }
 
     private List<Business> getFakeBusinesses() {
@@ -43,15 +42,5 @@ public class DataLoader implements CommandLineRunner {
         businesses.add(new Business(null, "Barbearia do Zé", "42345678000104", "Rua do Comércio, 321", "ze@barbearia.com", "(11) 99999-4444", "Ambiente descontraído e profissionais experientes."));
         businesses.add(new Business(null, "Barbearia Premium", "52345678000105", "Av. Paulista, 1000", "premium@barbearia.com", "(11) 99999-5555", "Serviços premium para clientes exigentes."));
         return businesses;
-    }
-
-    private List<Service> getFakeServices(Business business) {
-        List<Service> services = new ArrayList<>();
-        services.add(new Service(null, "Corte Masculino", 40, "00:30", business));
-        services.add(new Service(null, "Barba Completa", 30, "00:20", business));
-        services.add(new Service(null, "Corte + Barba", 60, "00:45", business));
-        services.add(new Service(null, "Sobrancelha", 15, "00:10", business));
-        services.add(new Service(null, "Hidratação Capilar", 25, "00:25", business));
-        return services;
     }
 }
