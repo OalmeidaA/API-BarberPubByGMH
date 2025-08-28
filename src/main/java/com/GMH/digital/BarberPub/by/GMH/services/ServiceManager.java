@@ -2,13 +2,17 @@ package com.GMH.digital.BarberPub.by.GMH.services;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.ServiceCreateDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDto;
+import com.GMH.digital.BarberPub.by.GMH.dto.UpdateOrderDTO;
 import com.GMH.digital.BarberPub.by.GMH.entities.Employee;
 import com.GMH.digital.BarberPub.by.GMH.entities.Service;
+import com.GMH.digital.BarberPub.by.GMH.entities.ServiceCategory;
 import com.GMH.digital.BarberPub.by.GMH.entities.User;
 import com.GMH.digital.BarberPub.by.GMH.exception.ResourceNotFoundException;
 import com.GMH.digital.BarberPub.by.GMH.repositories.EmployeeRepository;
+import com.GMH.digital.BarberPub.by.GMH.repositories.ServiceCategoryRepository;
 import com.GMH.digital.BarberPub.by.GMH.repositories.ServiceRepository;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,13 +23,15 @@ public class ServiceManager {
     private final AuthenticatedUserService authenticatedUserService;
     private final ServiceRepository serviceRepository;
     private final EmployeeRepository employeeRepository;
+    private final ServiceCategoryRepository serviceCategoryRepository;
 
     public ServiceManager(
             AuthenticatedUserService authenticatedUserService,
-            EmployeeRepository employeeRepository, ServiceRepository serviceRepository) {
+            EmployeeRepository employeeRepository, ServiceRepository serviceRepository, ServiceCategoryRepository serviceCategoryRepository) {
         this.authenticatedUserService = authenticatedUserService;
         this.serviceRepository = serviceRepository;
         this.employeeRepository = employeeRepository;
+        this.serviceCategoryRepository = serviceCategoryRepository;
     }
 
     public List<ServiceDto> getServices() {
@@ -76,6 +82,45 @@ public class ServiceManager {
         }
 
         serviceRepository.delete(service);
+    }
+
+    @Transactional
+    public void updateOrder(UpdateOrderDTO dto) {
+        Long businessId = getBusinessId();
+
+        // Updates categories order
+        if (dto.getCategories() != null) {
+            for (UpdateOrderDTO.CategoryOrderDTO categoryOrder : dto.getCategories()) {
+                ServiceCategory category = serviceCategoryRepository.findById(categoryOrder.getId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + categoryOrder.getId()));
+
+                category.setSortOrder(categoryOrder.getSortOrder());
+                serviceCategoryRepository.save(category);
+            }
+        }
+
+        // Updates services order and category
+        if (dto.getServices() != null) {
+            for (UpdateOrderDTO.ServiceOrderDTO serviceOrder : dto.getServices()) {
+                Service service = serviceRepository.findById(serviceOrder.getId())
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException("Service not found with id: " + serviceOrder.getId()));
+                if (service.getBusinessId() != businessId) {
+                    throw new AccessDeniedException("Service does not belong to the same business as the current user");
+                }
+
+                service.setSortOrder(serviceOrder.getSortOrder());
+
+                if (serviceOrder.getCategoryId() != null) {
+                    ServiceCategory category = serviceCategoryRepository.findById(serviceOrder.getCategoryId())
+                            .orElseThrow(() ->
+                                    new ResourceNotFoundException("Category not found with id: " + serviceOrder.getCategoryId()));
+                    service.setCategory(category);
+                }
+
+                serviceRepository.save(service);
+            }
+        }
     }
 
     private Long getBusinessId() {

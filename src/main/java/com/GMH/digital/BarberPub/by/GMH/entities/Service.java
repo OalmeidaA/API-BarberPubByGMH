@@ -31,9 +31,15 @@ public class Service implements Serializable {
 
     private boolean isAvailable;
 
+    private Integer sortOrder;
+
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private ServiceCategory category;
 
     @ManyToOne
     @JoinColumn(name = "business_id")
@@ -113,6 +119,22 @@ public class Service implements Serializable {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    public int getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(int sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public ServiceCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ServiceCategory category) {
+        this.category = category;
     }
 
     public Instant getCreatedAt() {

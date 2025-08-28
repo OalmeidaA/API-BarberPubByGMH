@@ -2,6 +2,7 @@ package com.GMH.digital.BarberPub.by.GMH.controllers;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.ServiceCreateDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.ServiceDto;
+import com.GMH.digital.BarberPub.by.GMH.dto.UpdateOrderDTO;
 import com.GMH.digital.BarberPub.by.GMH.services.ServiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,12 @@ public class ServiceRestController {
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Void> deleteService(@PathVariable Long id) {
         serviceManager.deleteService(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/sort-order")
+    public ResponseEntity<Void> updateSortOrder(@RequestBody UpdateOrderDTO dto) {
+        serviceManager.updateOrder(dto);
         return ResponseEntity.noContent().build();
     }
 

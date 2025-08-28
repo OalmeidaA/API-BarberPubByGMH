@@ -14,6 +14,7 @@ public class ServiceDto implements Serializable {
     private BigDecimal price;
     private int durationMinutes;
     private Boolean isAvailable;
+    private Long categoryId;
     private Instant createdAt;
     private Long businessId;
 
@@ -29,6 +30,7 @@ public class ServiceDto implements Serializable {
         durationMinutes = service.getDurationMinutes();
         priceType = service.getPriceType();
         isAvailable = service.isAvailable();
+        categoryId = service.getCategory() != null ? service.getCategory().getId() : null;
         createdAt = service.getCreatedAt();
         businessId = service.getBusiness().getId();
     }
@@ -95,6 +97,14 @@ public class ServiceDto implements Serializable {
 
     public void setAvailable(Boolean available) {
         isAvailable = available;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Instant getCreatedAt() {

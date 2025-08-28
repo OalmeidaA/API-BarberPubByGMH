@@ -1,27 +1,16 @@
 package com.GMH.digital.BarberPub.by.GMH.dto;
 
-import java.time.Instant;
-
 public class ServiceCreateDTO {
-    private Long id;
     private String name;
     private String description;
     private String priceType;
     private Double price;
     private int durationMinutes;
     private Boolean isAvailable;
-    private Instant createdAt;
+    private Long categoryId;
     private Long businessId;
 
     public ServiceCreateDTO() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -80,11 +69,11 @@ public class ServiceCreateDTO {
         isAvailable = available;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }
