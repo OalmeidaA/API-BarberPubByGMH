@@ -47,6 +47,44 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+
+    public Customer findById(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
+    }
+
+    public List<CustomerDTO> getAllCustomers() {
+        Customer currentCustomer = getCurrentCustomer();
+        return customerRepository.findByBusiness_Id(currentCustomer.getBusinessId())
+                .stream()
+                .map(CustomerDTO::new)
+                .toList();
+    }
+
+
+    private Employee getCurrentEmployee() {
+        User user = authenticatedUserService.getCurrentUser();
+        return employeeRepository.findById(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for current user"));
+    }
+
+    public void createCustomer(CustomerDTO dto) {
+        Employee employee = getCurrentEmployee();
+
+        Customer customer = new Customer();
+        customer.setName(dto.getName());
+        customer.setImage(dto.getImage());
+        customer.setCountryCode(dto.getCountryCode());
+        customer.setPhoneNumber(dto.getPhoneNumber());
+        customer.setBirthDate(dto.getBirthDate());
+        customer.setInternalNote(dto.getInternalNote());
+        customer.setEmail(dto.getEmail());
+
+        customer.setBusiness(employee.getBusiness());
+
+        customerRepository.save(customer);
+    }
+
     public void updateCustomer(long id, CustomerDTO dto) {
         Customer customer = findById(id);
         Employee currentEmployee = getCurrentEmployee();
@@ -62,22 +100,7 @@ public class CustomerService {
         customer.setBirthDate(dto.getBirthDate());
         customer.setInternalNote(dto.getInternalNote());
         customer.setEmail(dto.getEmail());
-        customer.setPassword(dto.getPassword());
-
         customerRepository.save(customer);
-    }
-
-    public Customer findById(Long id) {
-        return customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
-    }
-
-    public List<CustomerDTO> getAllCustomers() {
-        Customer currentCustomer = getCurrentCustomer();
-        return customerRepository.findByBusiness_Id(currentCustomer.getBusinessId())
-                .stream()
-                .map(CustomerDTO::new)
-                .toList();
     }
 
     public void deleteCustomer(Long id) {
@@ -89,30 +112,5 @@ public class CustomerService {
         }
 
         customerRepository.delete(customer);
-    }
-
-    private Employee getCurrentEmployee() {
-        User user = authenticatedUserService.getCurrentUser();
-        return employeeRepository.findById(user.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for current user"));
-    }
-
-    public void createCustomer(CustomerDTO dto) {
-        User user = authenticatedUserService.getCurrentUser();
-        Employee employee = getCurrentEmployee();
-
-        Customer customer = new Customer();
-        customer.setUser(user);
-        customer.setName(dto.getName());
-        customer.setImage(dto.getImage());
-        customer.setCountryCode(dto.getCountryCode());
-        customer.setPhoneNumber(dto.getPhoneNumber());
-        customer.setBirthDate(dto.getBirthDate());
-        customer.setEmail(dto.getEmail());
-        customer.setPassword(dto.getPassword());
-
-        customer.setBusiness(employee.getBusiness());
-
-        customerRepository.save(customer);
     }
 }

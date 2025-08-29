@@ -13,11 +13,11 @@ import java.util.Objects;
 public class Customer implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String name;
@@ -34,8 +34,6 @@ public class Customer implements Serializable {
 
     @Column(unique = true)
     private String email;
-
-    private String password;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -119,15 +117,6 @@ public class Customer implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
     public Instant getCreatedAt() {
         return createdAt;

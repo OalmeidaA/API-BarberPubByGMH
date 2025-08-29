@@ -14,7 +14,6 @@ public class CustomerDTO implements Serializable {
     private LocalDate birthDate;
     private String internalNote;
     private String email;
-    private String password;
     private Long createdAt;
 
     public CustomerDTO() {
@@ -29,7 +28,6 @@ public class CustomerDTO implements Serializable {
         internalNote = user.getInternalNote();
         birthDate = user.getBirthDate();
         email = user.getEmail();
-        password = user.getPassword();
         createdAt = user.getCreatedAt() != null ? user.getCreatedAt().toEpochMilli() : null;
     }
 
@@ -95,14 +93,6 @@ public class CustomerDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Long getCreatedAt() {
