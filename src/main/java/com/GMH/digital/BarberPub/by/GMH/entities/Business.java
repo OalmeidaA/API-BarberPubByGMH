@@ -25,7 +25,9 @@ public class Business implements Serializable {
     @Column(unique = true)
     private String cnpj;
 
-    private String address;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Lob
     private String description;
@@ -37,7 +39,7 @@ public class Business implements Serializable {
     public Business() {
     }
 
-    public Business(Long id, String name, String cnpj, String address, String email, String phone, String description) {
+    public Business(Long id, String name, String cnpj, Address address, String email, String phone, String description) {
         this.id = id;
         this.name = name;
         this.cnpj = cnpj;
@@ -53,8 +55,20 @@ public class Business implements Serializable {
         email = dto.getEmail();
         phone = dto.getPhone();
         cnpj = dto.getCnpj();
-        address = dto.getAddress();
         description = dto.getDescription();
+
+        if (dto.getAddress() != null) {
+            this.address = new Address(
+                dto.getAddress().getStreet(),
+                dto.getAddress().getNumber(),
+                dto.getAddress().getComplement(),
+                dto.getAddress().getNeighborhood(),
+                dto.getAddress().getCity(),
+                dto.getAddress().getState(),
+                dto.getAddress().getPostalCode(),
+                dto.getAddress().getCountry()
+            );
+        }
     }
 
     public Long getId() {
@@ -81,11 +95,11 @@ public class Business implements Serializable {
         this.cnpj = cnpj;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

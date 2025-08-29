@@ -1,6 +1,8 @@
 package com.GMH.digital.BarberPub.by.GMH.services;
 
+import com.GMH.digital.BarberPub.by.GMH.dto.AddressDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
+import com.GMH.digital.BarberPub.by.GMH.entities.Address;
 import com.GMH.digital.BarberPub.by.GMH.entities.Business;
 import com.GMH.digital.BarberPub.by.GMH.repositories.BusinessRepository;
 import org.springframework.stereotype.Service;
@@ -42,4 +44,29 @@ public class BusinessService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public BusinessDTO updateBusinessAddress(AddressDTO addressDTO) {
+        Long businessId = employeeService.getCurrentEmployee().getBusinessId();
+        Business business = repository.findById(businessId)
+                .orElseThrow(() -> new IllegalArgumentException("Business not found with id: " + businessId));
+
+        Address address = business.getAddress();
+        if (address == null) {
+            address = new Address();
+            business.setAddress(address);
+        }
+
+        // Atualizar os dados do endereço
+        address.setStreet(addressDTO.getStreet());
+        address.setNumber(addressDTO.getNumber());
+        address.setComplement(addressDTO.getComplement());
+        address.setNeighborhood(addressDTO.getNeighborhood());
+        address.setCity(addressDTO.getCity());
+        address.setState(addressDTO.getState());
+        address.setPostalCode(addressDTO.getPostalCode());
+        address.setCountry(addressDTO.getCountry());
+
+        Business updatedBusiness = repository.save(business);
+        return new BusinessDTO(updatedBusiness);
+    }
 }

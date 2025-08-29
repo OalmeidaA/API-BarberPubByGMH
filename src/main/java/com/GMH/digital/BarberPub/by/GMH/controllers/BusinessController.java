@@ -1,12 +1,11 @@
 package com.GMH.digital.BarberPub.by.GMH.controllers;
 
+import com.GMH.digital.BarberPub.by.GMH.dto.AddressDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
 import com.GMH.digital.BarberPub.by.GMH.services.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,4 +28,9 @@ public class BusinessController {
         return ResponseEntity.ok(business);
     }
 
+    @PutMapping("/address")
+    public ResponseEntity<Void> updateBusinessAddress(@RequestBody AddressDTO addressDTO) {
+        businessService.updateBusinessAddress(addressDTO);
+        return ResponseEntity.noContent().build();
+    }
 }

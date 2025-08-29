@@ -3,37 +3,53 @@ package com.GMH.digital.BarberPub.by.GMH.dto;
 import com.GMH.digital.BarberPub.by.GMH.entities.Business;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 public class BusinessDTO implements Serializable {
+
     private Long id;
     private String name;
     private String email;
     private String phone;
     private String cnpj;
-    private String address;
+    private AddressDTO address;
     private String description;
+    private Instant createdAt;
 
     public BusinessDTO() {
     }
 
-    public BusinessDTO(Business business) {
-        id = business.getId();
-        name = business.getName();
-        email = business.getEmail();
-        phone = business.getPhone();
-        cnpj = business.getCnpj();
-        address = business.getAddress();
-        description = business.getDescription();
+    public BusinessDTO(Business entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.email = entity.getEmail();
+        this.phone = entity.getPhone();
+        this.cnpj = entity.getCnpj();
+        this.description = entity.getDescription();
+        this.createdAt = entity.getCreatedAt();
+
+        if (entity.getAddress() != null) {
+            this.address = new AddressDTO(
+                entity.getAddress().getId(),
+                entity.getAddress().getStreet(),
+                entity.getAddress().getNumber(),
+                entity.getAddress().getComplement(),
+                entity.getAddress().getNeighborhood(),
+                entity.getAddress().getCity(),
+                entity.getAddress().getState(),
+                entity.getAddress().getPostalCode(),
+                entity.getAddress().getCountry()
+            );
+        }
     }
 
-    public BusinessDTO(Long id, String name, String email, String phone, String cnpj, String address, String description) {
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.cnpj = cnpj;
-        this.address = address;
-        this.description = description;
     }
 
     public String getName() {
@@ -68,11 +84,11 @@ public class BusinessDTO implements Serializable {
         this.cnpj = cnpj;
     }
 
-    public String getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(AddressDTO address) {
         this.address = address;
     }
 
@@ -84,12 +100,11 @@ public class BusinessDTO implements Serializable {
         this.description = description;
     }
 
-    public Long getId() {
-        return id;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
-
 }
