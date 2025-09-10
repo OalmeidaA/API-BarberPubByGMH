@@ -44,6 +44,9 @@ public class Business implements Serializable {
     @Column(updatable = false)
     private Instant createdAt;
 
+    @Enumerated(EnumType.STRING)
+    private BusinessCategory category;
+
     @ElementCollection(targetClass = Amenity.class)
     @CollectionTable(name = "business_amenities", joinColumns = @JoinColumn(name = "business_id"))
     @Enumerated(EnumType.STRING)
@@ -212,6 +215,14 @@ public class Business implements Serializable {
 
     public void setWebsiteUrl(String websiteUrl) {
         this.websiteUrl = websiteUrl;
+    }
+
+    public BusinessCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(BusinessCategory category) {
+        this.category = category;
     }
 
 }

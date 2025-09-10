@@ -2,6 +2,7 @@ package com.GMH.digital.BarberPub.by.GMH.services;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.AddressDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessAmenitiesDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.BusinessBasicDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessSocialsDTO;
 import com.GMH.digital.BarberPub.by.GMH.entities.Address;
@@ -90,6 +91,20 @@ public class BusinessService {
         Business business = employeeService.getCurrentEmployee().getBusiness();
 
         business.setAmenities(amenitiesDTO.getAmenities());
+
+        repository.save(business);
+    }
+
+    @Transactional
+    public void updateBasicInfo(BusinessBasicDTO basicDTO) {
+        Business business = employeeService.getCurrentEmployee().getBusiness();
+
+        business.setName(basicDTO.getName());
+        business.setDescription(basicDTO.getDescription());
+        business.setPhone(basicDTO.getPhone());
+        business.setEmail(basicDTO.getEmail());
+        business.setCnpj(basicDTO.getCnpj());
+        business.setCategory(basicDTO.getCategory());
 
         repository.save(business);
     }

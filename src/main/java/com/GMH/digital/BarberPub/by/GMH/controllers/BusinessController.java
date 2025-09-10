@@ -1,10 +1,8 @@
 package com.GMH.digital.BarberPub.by.GMH.controllers;
 
-import com.GMH.digital.BarberPub.by.GMH.dto.AddressDTO;
-import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
-import com.GMH.digital.BarberPub.by.GMH.dto.BusinessAmenitiesDTO;
-import com.GMH.digital.BarberPub.by.GMH.dto.BusinessSocialsDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.*;
 import com.GMH.digital.BarberPub.by.GMH.entities.Amenity;
+import com.GMH.digital.BarberPub.by.GMH.entities.BusinessCategory;
 import com.GMH.digital.BarberPub.by.GMH.services.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +27,17 @@ public class BusinessController {
     public ResponseEntity<List<BusinessDTO>> getBusiness() {
         List<BusinessDTO> business = businessService.findAllBusiness();
         return ResponseEntity.ok(business);
+    }
+
+    @PutMapping("/basic")
+    public ResponseEntity<Void> updateBasicInfo(@RequestBody BusinessBasicDTO basicDTO) {
+        businessService.updateBasicInfo(basicDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<BusinessCategory[]> getAllCategories() {
+        return ResponseEntity.ok(BusinessCategory.values());
     }
 
     @PutMapping("/address")

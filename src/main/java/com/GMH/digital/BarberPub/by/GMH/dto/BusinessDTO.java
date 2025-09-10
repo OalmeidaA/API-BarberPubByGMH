@@ -2,6 +2,7 @@ package com.GMH.digital.BarberPub.by.GMH.dto;
 
 import com.GMH.digital.BarberPub.by.GMH.entities.Amenity;
 import com.GMH.digital.BarberPub.by.GMH.entities.Business;
+import com.GMH.digital.BarberPub.by.GMH.entities.BusinessCategory;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -22,6 +23,7 @@ public class BusinessDTO implements Serializable {
     private String youtubeUrl;
     private String websiteUrl;
     private Instant createdAt;
+    private BusinessCategory category;
     private List<Amenity> amenities = new ArrayList<>();
 
     public BusinessDTO() {
@@ -35,6 +37,7 @@ public class BusinessDTO implements Serializable {
         this.cnpj = entity.getCnpj();
         this.description = entity.getDescription();
         this.createdAt = entity.getCreatedAt();
+        this.category = entity.getCategory();
 
         if (entity.getAddress() != null) {
             this.address = new AddressDTO(
@@ -161,6 +164,14 @@ public class BusinessDTO implements Serializable {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public BusinessCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(BusinessCategory category) {
+        this.category = category;
     }
 
     public List<Amenity> getAmenities() {
