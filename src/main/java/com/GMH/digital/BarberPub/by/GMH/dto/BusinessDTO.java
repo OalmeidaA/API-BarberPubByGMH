@@ -14,6 +14,11 @@ public class BusinessDTO implements Serializable {
     private String cnpj;
     private AddressDTO address;
     private String description;
+    private String facebookUrl;
+    private String instagramUrl;
+    private String twitterUrl;
+    private String youtubeUrl;
+    private String websiteUrl;
     private Instant createdAt;
 
     public BusinessDTO() {
@@ -41,6 +46,11 @@ public class BusinessDTO implements Serializable {
                 entity.getAddress().getCountry()
             );
         }
+        this.facebookUrl = entity.getFacebookUrl();
+        this.instagramUrl = entity.getInstagramUrl();
+        this.twitterUrl = entity.getTwitterUrl();
+        this.youtubeUrl = entity.getYoutubeUrl();
+        this.websiteUrl = entity.getWebsiteUrl();
     }
 
     // Getters and Setters
@@ -98,6 +108,46 @@ public class BusinessDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getFacebookUrl() {
+        return facebookUrl;
+    }
+
+    public void setFacebookUrl(String facebookUrl) {
+        this.facebookUrl = facebookUrl;
+    }
+
+    public String getInstagramUrl() {
+        return instagramUrl;
+    }
+
+    public void setInstagramUrl(String instagramUrl) {
+        this.instagramUrl = instagramUrl;
+    }
+
+    public String getTwitterUrl() {
+        return twitterUrl;
+    }
+
+    public void setTwitterUrl(String twitterUrl) {
+        this.twitterUrl = twitterUrl;
+    }
+
+    public String getYoutubeUrl() {
+        return youtubeUrl;
+    }
+
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
+    }
+
+    public String getWebsiteUrl() {
+        return websiteUrl;
+    }
+
+    public void setWebsiteUrl(String websiteUrl) {
+        this.websiteUrl = websiteUrl;
     }
 
     public Instant getCreatedAt() {

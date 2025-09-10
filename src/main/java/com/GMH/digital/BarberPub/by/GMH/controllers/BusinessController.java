@@ -2,6 +2,7 @@ package com.GMH.digital.BarberPub.by.GMH.controllers;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.AddressDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.BusinessSocialsDTO;
 import com.GMH.digital.BarberPub.by.GMH.services.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,12 @@ public class BusinessController {
     @PutMapping("/address")
     public ResponseEntity<Void> updateBusinessAddress(@RequestBody AddressDTO addressDTO) {
         businessService.updateBusinessAddress(addressDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/socials")
+    public ResponseEntity<Void> updateSocialsLinks(@RequestBody BusinessSocialsDTO socialsDTO) {
+        businessService.updateSocialsLinks(socialsDTO);
         return ResponseEntity.noContent().build();
     }
 }

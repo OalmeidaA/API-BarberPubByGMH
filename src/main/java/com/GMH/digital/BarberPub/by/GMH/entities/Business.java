@@ -32,6 +32,12 @@ public class Business implements Serializable {
     @Lob
     private String description;
 
+    private String facebookUrl;
+    private String instagramUrl;
+    private String twitterUrl;
+    private String youtubeUrl;
+    private String websiteUrl;
+
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;
@@ -150,6 +156,46 @@ public class Business implements Serializable {
             return false;
         Business other = (Business) obj;
         return Objects.equals(cnpj, other.cnpj) && Objects.equals(id, other.id);
+    }
+
+    public String getFacebookUrl() {
+        return facebookUrl;
+    }
+
+    public void setFacebookUrl(String facebookUrl) {
+        this.facebookUrl = facebookUrl;
+    }
+
+    public String getInstagramUrl() {
+        return instagramUrl;
+    }
+
+    public void setInstagramUrl(String instagramUrl) {
+        this.instagramUrl = instagramUrl;
+    }
+
+    public String getTwitterUrl() {
+        return twitterUrl;
+    }
+
+    public void setTwitterUrl(String twitterUrl) {
+        this.twitterUrl = twitterUrl;
+    }
+
+    public String getYoutubeUrl() {
+        return youtubeUrl;
+    }
+
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
+    }
+
+    public String getWebsiteUrl() {
+        return websiteUrl;
+    }
+
+    public void setWebsiteUrl(String websiteUrl) {
+        this.websiteUrl = websiteUrl;
     }
 
 }
