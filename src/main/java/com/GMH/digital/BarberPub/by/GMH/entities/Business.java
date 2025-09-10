@@ -6,7 +6,9 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "business")
@@ -41,6 +43,12 @@ public class Business implements Serializable {
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;
+
+    @ElementCollection(targetClass = Amenity.class)
+    @CollectionTable(name = "business_amenities", joinColumns = @JoinColumn(name = "business_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "amenity")
+    private Set<Amenity> amenities = new HashSet<>();
 
     public Business() {
     }
@@ -139,6 +147,14 @@ public class Business implements Serializable {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Set<Amenity> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(Set<Amenity> amenities) {
+        this.amenities = amenities;
     }
 
     @Override

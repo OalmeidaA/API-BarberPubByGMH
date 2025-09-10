@@ -1,9 +1,12 @@
 package com.GMH.digital.BarberPub.by.GMH.dto;
 
+import com.GMH.digital.BarberPub.by.GMH.entities.Amenity;
 import com.GMH.digital.BarberPub.by.GMH.entities.Business;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BusinessDTO implements Serializable {
 
@@ -20,6 +23,7 @@ public class BusinessDTO implements Serializable {
     private String youtubeUrl;
     private String websiteUrl;
     private Instant createdAt;
+    private Set<Amenity> amenities = new HashSet<>();
 
     public BusinessDTO() {
     }
@@ -51,6 +55,7 @@ public class BusinessDTO implements Serializable {
         this.twitterUrl = entity.getTwitterUrl();
         this.youtubeUrl = entity.getYoutubeUrl();
         this.websiteUrl = entity.getWebsiteUrl();
+        this.amenities = entity.getAmenities() != null ? new HashSet<>(entity.getAmenities()) : new HashSet<>();
     }
 
     // Getters and Setters
@@ -156,5 +161,13 @@ public class BusinessDTO implements Serializable {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Set<Amenity> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(Set<Amenity> amenities) {
+        this.amenities = amenities;
     }
 }

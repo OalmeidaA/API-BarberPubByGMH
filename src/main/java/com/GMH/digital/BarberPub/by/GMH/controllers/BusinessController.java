@@ -2,7 +2,9 @@ package com.GMH.digital.BarberPub.by.GMH.controllers;
 
 import com.GMH.digital.BarberPub.by.GMH.dto.AddressDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessDTO;
+import com.GMH.digital.BarberPub.by.GMH.dto.BusinessAmenitiesDTO;
 import com.GMH.digital.BarberPub.by.GMH.dto.BusinessSocialsDTO;
+import com.GMH.digital.BarberPub.by.GMH.entities.Amenity;
 import com.GMH.digital.BarberPub.by.GMH.services.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,17 @@ public class BusinessController {
     @PutMapping("/socials")
     public ResponseEntity<Void> updateSocialsLinks(@RequestBody BusinessSocialsDTO socialsDTO) {
         businessService.updateSocialsLinks(socialsDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/amenities")
+    public ResponseEntity<Amenity[]> getAllAmenities() {
+        return ResponseEntity.ok(Amenity.values());
+    }
+
+    @PutMapping("/amenities")
+    public ResponseEntity<Void> updateAmenities(@RequestBody BusinessAmenitiesDTO amenitiesDTO) {
+        businessService.updateAmenities(amenitiesDTO);
         return ResponseEntity.noContent().build();
     }
 }
