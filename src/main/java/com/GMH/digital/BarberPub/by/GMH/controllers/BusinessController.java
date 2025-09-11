@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @RestController
@@ -61,5 +62,22 @@ public class BusinessController {
     public ResponseEntity<Void> updateAmenities(@RequestBody BusinessAmenitiesDTO amenitiesDTO) {
         businessService.updateAmenities(amenitiesDTO);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/hours")
+    public ResponseEntity<Void> updateBusinessHours(@RequestBody BusinessHoursDTO businessHoursDTO) {
+        businessService.updateBusinessHours(businessHoursDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/hours")
+    public ResponseEntity<BusinessHoursDTO> getBusinessHours() {
+        BusinessHoursDTO businessHours = businessService.getBusinessHours();
+        return ResponseEntity.ok(businessHours);
+    }
+
+    @GetMapping("/days")
+    public ResponseEntity<DayOfWeek[]> getAllDaysOfWeek() {
+        return ResponseEntity.ok(DayOfWeek.values());
     }
 }

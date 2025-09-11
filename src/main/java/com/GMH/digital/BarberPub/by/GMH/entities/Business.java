@@ -6,7 +6,9 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -52,6 +54,9 @@ public class Business implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "amenity")
     private Set<Amenity> amenities = new HashSet<>();
+
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BusinessHour> businessHours = new ArrayList<>();
 
     public Business() {
     }
@@ -223,6 +228,14 @@ public class Business implements Serializable {
 
     public void setCategory(BusinessCategory category) {
         this.category = category;
+    }
+
+    public List<BusinessHour> getBusinessHours() {
+        return businessHours;
+    }
+
+    public void setBusinessHours(List<BusinessHour> businessHours) {
+        this.businessHours = businessHours;
     }
 
 }

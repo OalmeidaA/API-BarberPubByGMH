@@ -7,9 +7,9 @@ import com.GMH.digital.BarberPub.by.GMH.entities.BusinessCategory;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BusinessDTO implements Serializable {
-
     private Long id;
     private String name;
     private String email;
@@ -25,6 +25,7 @@ public class BusinessDTO implements Serializable {
     private Instant createdAt;
     private BusinessCategory category;
     private List<Amenity> amenities = new ArrayList<>();
+    private List<BusinessHourDTO> businessHours = new ArrayList<>();
 
     public BusinessDTO() {
     }
@@ -59,6 +60,19 @@ public class BusinessDTO implements Serializable {
         this.websiteUrl = entity.getWebsiteUrl();
         this.amenities = entity.getAmenities() != null ? new ArrayList<>(entity.getAmenities()) : new ArrayList<>();
         this.amenities.sort(Comparator.comparing(Enum::ordinal));
+
+        if (entity.getBusinessHours() != null) {
+            this.businessHours = entity.getBusinessHours().stream()
+                .map(bh -> new BusinessHourDTO(
+                    bh.getId(),
+                    bh.getDayOfWeek(),
+                    bh.getClosed(),
+                    bh.getOpeningTime(),
+                    bh.getClosingTime()
+                ))
+                .sorted(Comparator.comparing(BusinessHourDTO::getDayOfWeek))
+                .collect(Collectors.toList());
+        }
     }
 
     // Getters and Setters
@@ -180,5 +194,13 @@ public class BusinessDTO implements Serializable {
 
     public void setAmenities(List<Amenity> amenities) {
         this.amenities = amenities;
+    }
+
+    public List<BusinessHourDTO> getBusinessHours() {
+        return businessHours;
+    }
+
+    public void setBusinessHours(List<BusinessHourDTO> businessHours) {
+        this.businessHours = businessHours;
     }
 }
